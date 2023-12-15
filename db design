@@ -1,0 +1,179 @@
+
+
+-- USER CATEGORY (pastor, reverend, assistant pastor) -> seeder
+-- 	- id
+-- 	- leader title
+-- 	- leader title description
+-- 	- status
+-- 	- isdeleted
+-- 	- date_created
+-- 	- date_updated
+
+-- USER
+-- 	- id
+-- 	- user_category_id => USER CATEGORY
+-- 	- firstname
+-- 	- lastname
+-- 	- middlename
+-- 	- birthday
+-- 	- address
+-- 	- contactnumber
+-- 	- isdeleted
+-- 	- date_created
+-- 	- date_updated
+
+-- USER ROLES (admin, user, etc..)
+-- 	- id
+-- 	- role
+-- 	- description
+-- 	- isdeleted
+-- 	- date_created
+-- 	- date_updated
+
+-- ACCESS TYPE
+-- 	- id
+-- 	- access
+-- 	- description
+-- 	- isdeleted
+-- 	- date_created
+-- 	- date_updated
+
+-- USER ROLE ACCESS
+-- 	- id
+-- 	- user_id => USER
+-- 	- role_id => ROLES
+-- 	- access_type_id => ACCESS TYPE
+-- 	- isdeleted
+-- 	- date_created
+-- 	- date_updated
+
+DISTRICT
+	- id
+	- district name
+	- district description
+	- status
+	- isdeleted
+	- date_created
+	- date_updated
+
+AREA
+	- id
+	- area name
+	- area description
+	- status
+	- isdeleted
+	- date_created
+	- date_updated
+
+DISTRICT AREAS
+	- id
+	- district_id => DISTRICT
+	- area_id => AREA
+	- status
+	- isdeleted
+	- date_created
+	- date_updated
+
+CHURCH LOCATION
+	- id
+	- location name
+	- location description
+	- status
+	- isdeleted
+	- date_created
+	- date_updated
+
+CHURCH
+	- id
+	- church name
+	- district description
+	- district_area_id => DISTRICT AREAS
+	- church_location_id => CHURCH LOCATION
+	- isdeleted
+	- date_created
+	- date_updated
+
+MINISTRY CATEGORY
+	- id
+	- minitry name
+	- ministry description
+	- status
+	- isdeleted
+	- date_created
+	- date_updated
+
+ASSIGNED CHURCH LEADER
+	- id
+	- user_id => USER
+	- church_id => CHURCH
+	- has ministry (true/false)
+	- status
+	- isdeleted
+	- date_created
+	- date_updated
+
+ASSIGNED CHURCH LEADER MINISTRY
+	- id
+	- assigned_church_leader_id => ASSIGNED CHURCH LEADER
+	- ministry_category_id => MINISTRY CATEGORY
+	- status
+	- isdeleted
+	- date_created
+	- date_updated
+
+ACTIVITY CATEGORY
+	- id
+	- activity name
+	- activity description
+	- status
+	- isdeleted
+	- date_created
+	- date_updated
+
+ACTIVITY
+	- id
+	- user_id => USER (author id or who prepares the document)
+	- activity_category_id => ACTIVITY CATEGORY
+	- adult_attendance_count
+	- youth_attendance_count
+	- children_attendance_count
+	- total_tithes
+	- total_offering
+	- gospel_seed
+	- personal_tithes
+	- activity_date
+	- remarks
+	- date_created
+	- date_updated
+
+ACTIVITY TESTIMONIES MIRACLES
+	- id
+	- activity_id => ACTIVITY
+	- attendie_name
+	- testimonies_miracles_details
+	- isdeleted
+
+CREATED DOCUMENT ACTIVITY APPROVAL
+	- id
+	- activity_id => ACTIVITY
+	- approver_id => USER
+	- is_approved (true/false)
+	- remarks
+    - is_generated_file (true/false)
+    - generated_file_location
+	- isdeleted
+	- status => default is waiting approval
+	- date_created
+	- date_updated
+
+NOTIFICATIONS UPDATE:
+
+1. update: will notify the assigned Pastor or immediate leader of the church once the document is submitted by the church secretary for approval state of the assigned church Pastor.
+
+2. update: will notify the leader of the area and district for example: Pastor Pijime and Rev. Pastor Cosme once the document is approved by the assigned church Pastor and the current state of the document if no pdf has been generated yet.
+
+3. update: will notify the leader of the area and district for example: Pastor Pijime and Rev. Pastor Cosme once the assigned church Pastor generated a pdf file.
+
+4. update: will notify the assigned church Pastor for example: Pastor Ruel Sambayon once his approved generated pdf file is already recognize by area and district overseer for example: Pastor Pijime and Rev. Pastor Cosme
+
+5. will notify all the users in app when announcement has been posted
