@@ -216,20 +216,20 @@ class ReportController extends Controller
 
             // current month total adult attendee
             $total_adult_count = DB::select(
-                '   SELECT SUM(adult_attendance_count)
+                '   SELECT SUM(adult_attendance_count) as current_month_adult_total
                     FROM activities
                     WHERE user_id = ?
                     AND Month(activity_date) = MONTH(now());', [Auth::user()->id]);
 
             // current month total youth attendee
             $total_youth_count = DB::select(
-                '   SELECT SUM(youth_attendance_count)
+                '   SELECT SUM(youth_attendance_count)  as current_month_youth_total
                     FROM activities
                     WHERE user_id = ?
                     AND Month(activity_date) = MONTH(now());', [Auth::user()->id]);
             // current month total children attendee
             $total_children_count = DB::select(
-                '   SELECT SUM(children_attendance_count)
+                '   SELECT SUM(children_attendance_count)  as current_month_children_total
                     FROM activities
                     WHERE user_id = ?
                     AND Month(activity_date) = MONTH(now());', [Auth::user()->id]);
