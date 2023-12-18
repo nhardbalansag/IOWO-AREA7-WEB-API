@@ -200,7 +200,7 @@ class ReportController extends Controller
 
             // three previous to current month tithes graph
             $total_graph_tithes = DB::select(
-                '   SELECT SUM(total_tithes) as tithes, Month(activity_date) as month
+                '   SELECT SUM(total_tithes) as data_set, Month(activity_date) as label
                     FROM activities
                     WHERE user_id = ?
                     AND activity_date >= CURDATE() - INTERVAL 3 MONTH
@@ -208,7 +208,7 @@ class ReportController extends Controller
 
             // three previous to current month offering graph
             $total_graph_offering = DB::select(
-                '   SELECT SUM(total_offering) as tithes, Month(activity_date) as month
+                '   SELECT SUM(total_offering) as data_set, Month(activity_date) as label
                     FROM activities
                     WHERE user_id = ?
                     AND activity_date >= CURDATE() - INTERVAL 3 MONTH
@@ -235,7 +235,7 @@ class ReportController extends Controller
                     AND Month(activity_date) = MONTH(now());', [Auth::user()->id]);
             // three previous to current month total attendee graph
             $total_graph_attendee = DB::select(
-                '   SELECT SUM(adult_attendance_count + youth_attendance_count + children_attendance_count) as total_attendee, Month(activity_date) as month
+                '   SELECT SUM(adult_attendance_count + youth_attendance_count + children_attendance_count) as data_set, Month(activity_date) as label
                     FROM activities
                     WHERE user_id = ?
                     AND activity_date >= CURDATE() - INTERVAL 3 MONTH
