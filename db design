@@ -22,7 +22,7 @@
 -- 	- date_created
 -- 	- date_updated
 
--- USER ROLES (admin, user, etc..)
+-- USER ROLES (admin, user, etc..) -> seeder
 -- 	- id
 -- 	- role
 -- 	- description
@@ -30,7 +30,7 @@
 -- 	- date_created
 -- 	- date_updated
 
--- ACCESS TYPE
+-- ACCESS TYPE -> seeder
 -- 	- id
 -- 	- access
 -- 	- description
@@ -38,7 +38,7 @@
 -- 	- date_created
 -- 	- date_updated
 
--- USER ROLE ACCESS
+-- USER ROLE ACCESS -> seeder for initial users
 -- 	- id
 -- 	- user_id => USER
 -- 	- role_id => ROLES
@@ -47,124 +47,102 @@
 -- 	- date_created
 -- 	- date_updated
 
-DISTRICT
-	- id
-	- district name
-	- district description
-	- status
-	- isdeleted
-	- date_created
-	- date_updated
+-- DISTRICT -> seeder
+-- 	- id
+-- 	- district name
+-- 	- district description
+-- 	- status
+-- 	- isdeleted
+-- 	- date_created
+-- 	- date_updated
 
-AREA
-	- id
-	- area name
-	- area description
-	- status
-	- isdeleted
-	- date_created
-	- date_updated
+-- AREA -> seeder
+-- 	- id
+-- 	- area name
+-- 	- area description
+-- 	- status
+-- 	- isdeleted
+-- 	- date_created
+-- 	- date_updated
 
-DISTRICT AREAS
-	- id
-	- district_id => DISTRICT
-	- area_id => AREA
-	- status
-	- isdeleted
-	- date_created
-	- date_updated
+-- DISTRICT AREAS -> seeder
+-- 	- id
+-- 	- district_id => DISTRICT
+-- 	- area_id => AREA
+-- 	- status
+-- 	- isdeleted
+-- 	- date_created
+-- 	- date_updated
 
-CHURCH LOCATION
-	- id
-	- location name
-	- location description
-	- status
-	- isdeleted
-	- date_created
-	- date_updated
+-- CHURCH
+-- 	- id
+-- 	- church name
+-- 	- district description
+-- 	- district_area_id => DISTRICT AREAS
 
-CHURCH
-	- id
-	- church name
-	- district description
-	- district_area_id => DISTRICT AREAS
-	- church_location_id => CHURCH LOCATION
-	- isdeleted
-	- date_created
-	- date_updated
+-- 	- church_address
 
-MINISTRY CATEGORY
-	- id
-	- minitry name
-	- ministry description
-	- status
-	- isdeleted
-	- date_created
-	- date_updated
+-- 	- isdeleted
+-- 	- date_created
+-- 	- date_updated
 
-ASSIGNED CHURCH LEADER
-	- id
-	- user_id => USER
-	- church_id => CHURCH
-	- has ministry (true/false)
-	- status
-	- isdeleted
-	- date_created
-	- date_updated
+-- ASSIGNED CHURCH LEADER
+-- 	- id
+-- 	- user_id => USER
+-- 	- church_id => CHURCH
+-- 	- status
+-- 	- isdeleted
+-- 	- date_created
+-- 	- date_updated
 
-ASSIGNED CHURCH LEADER MINISTRY
-	- id
-	- assigned_church_leader_id => ASSIGNED CHURCH LEADER
-	- ministry_category_id => MINISTRY CATEGORY
-	- status
-	- isdeleted
-	- date_created
-	- date_updated
+-- ACTIVITY CATEGORY
+-- 	- id
+-- 	- activity name
+-- 	- activity description
+-- 	- status
+-- 	- isdeleted
+-- 	- date_created
+-- 	- date_updated
 
-ACTIVITY CATEGORY
-	- id
-	- activity name
-	- activity description
-	- status
-	- isdeleted
-	- date_created
-	- date_updated
+-- ACTIVITY (transaction per activity)
+-- 	- id
+-- 	- user_id => USER (author id or who prepares the document)
+-- 	- activity_category_id => ACTIVITY CATEGORY
 
-ACTIVITY
-	- id
-	- user_id => USER (author id or who prepares the document)
-	- activity_category_id => ACTIVITY CATEGORY
-	- adult_attendance_count
-	- youth_attendance_count
-	- children_attendance_count
-	- total_tithes
-	- total_offering
-	- gospel_seed
-	- personal_tithes
-	- activity_date
-	- remarks
-	- date_created
-	- date_updated
+-- 	- adult_attendance_count
+-- 	- youth_attendance_count
+-- 	- children_attendance_count
 
-ACTIVITY TESTIMONIES MIRACLES
-	- id
-	- activity_id => ACTIVITY
-	- attendie_name
-	- testimonies_miracles_details
-	- isdeleted
+-- 	- total_tithes
+-- 	- total_offering
+-- 	- gospel_seed
+-- 	- personal_tithes
 
-CREATED DOCUMENT ACTIVITY APPROVAL
-	- id
-	- activity_id => ACTIVITY
-	- approver_id => USER
-	- is_approved (true/false)
-	- remarks
-    - is_generated_file (true/false)
-    - generated_file_location
-	- isdeleted
-	- status => default is waiting approval
-	- date_created
-	- date_updated
+-- 	- new_bible_studies_count
+-- 	- existing_bible_studies_count
+-- 	- received_jesus_count
+-- 	- water_baptized_count
+-- 	- holy_spirit_baptized_count
+-- 	- children_dedication_count
+-- 	- healed_count
+
+-- 	- testimonies_miracles_details
+
+-- 	- activity_date
+-- 	- remarks
+-- 	- date_created
+-- 	- date_updated
+
+-- Generated Document
+-- 	- id
+-- 	- user_id => USER
+--     - date_generated
+-- 	- is_recognized
+--     - file_location
+--     - file_name
+--     - code
+-- 	- date_created
+-- 	- date_updated
 
 NOTIFICATIONS UPDATE:
 
