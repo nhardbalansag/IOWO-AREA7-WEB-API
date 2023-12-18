@@ -21,15 +21,8 @@ return new class extends Migration
             ->onDelete('cascade')
             ->onUpdate('cascade');
 
-            $table->bigInteger('church_location_id')->unsigned()->nullable(false);
-            $table->foreign('church_location_id')
-            ->references('id')
-            ->on('church_locations')
-            ->onDelete('cascade')
-            ->onUpdate('cascade');
-
             $table->string('church_name')->nullable(false);
-            $table->string('description')->nullable(false);
+            $table->string('church_address')->nullable(false);
             $table->string('status')->nullable(false)->default('active');
             $table->boolean('isdeleted')->nullable(false)->default(false);
 

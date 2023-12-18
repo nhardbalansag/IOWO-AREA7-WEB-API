@@ -22,7 +22,7 @@
 -- 	- date_created
 -- 	- date_updated
 
--- USER ROLES (admin, user, etc..)
+-- USER ROLES (admin, user, etc..) -> seeder
 -- 	- id
 -- 	- role
 -- 	- description
@@ -30,7 +30,7 @@
 -- 	- date_created
 -- 	- date_updated
 
--- ACCESS TYPE
+-- ACCESS TYPE -> seeder
 -- 	- id
 -- 	- access
 -- 	- description
@@ -38,7 +38,7 @@
 -- 	- date_created
 -- 	- date_updated
 
--- USER ROLE ACCESS
+-- USER ROLE ACCESS -> seeder for initial users
 -- 	- id
 -- 	- user_id => USER
 -- 	- role_id => ROLES
@@ -47,7 +47,7 @@
 -- 	- date_created
 -- 	- date_updated
 
--- DISTRICT
+-- DISTRICT -> seeder
 -- 	- id
 -- 	- district name
 -- 	- district description
@@ -56,7 +56,7 @@
 -- 	- date_created
 -- 	- date_updated
 
--- AREA
+-- AREA -> seeder
 -- 	- id
 -- 	- area name
 -- 	- area description
@@ -65,19 +65,10 @@
 -- 	- date_created
 -- 	- date_updated
 
--- DISTRICT AREAS
+-- DISTRICT AREAS -> seeder
 -- 	- id
 -- 	- district_id => DISTRICT
 -- 	- area_id => AREA
--- 	- status
--- 	- isdeleted
--- 	- date_created
--- 	- date_updated
-
--- CHURCH LOCATION
--- 	- id
--- 	- location name
--- 	- location description
 -- 	- status
 -- 	- isdeleted
 -- 	- date_created
@@ -88,7 +79,9 @@
 -- 	- church name
 -- 	- district description
 -- 	- district_area_id => DISTRICT AREAS
--- 	- church_location_id => CHURCH LOCATION
+
+-- 	- church_address
+
 -- 	- isdeleted
 -- 	- date_created
 -- 	- date_updated
@@ -125,10 +118,13 @@
 -- 	- gospel_seed
 -- 	- personal_tithes
 
--- 	- bible_studies_count
+-- 	- new_bible_studies_count
+-- 	- existing_bible_studies_count
 -- 	- received_jesus_count
 -- 	- water_baptized_count
+-- 	- holy_spirit_baptized_count
 -- 	- children_dedication_count
+-- 	- healed_count
 
 -- 	- testimonies_miracles_details
 

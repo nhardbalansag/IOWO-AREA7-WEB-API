@@ -21,7 +21,7 @@ return new class extends Migration
             ->onDelete('cascade')
             ->onUpdate('cascade');
 
-            $table->bigInteger('activity_category_id')->unsigned()->nullable(false);
+            $table->bigInteger('activity_category_id')->unsigned()->nullable(false)->default(1);
             $table->foreign('activity_category_id')
             ->references('id')
             ->on('activity_categories')
@@ -37,9 +37,14 @@ return new class extends Migration
             $table->decimal('gospel_seed')->nullable(false)->default(0);
             $table->decimal('personal_tithes')->nullable(false)->default(0);
 
-            $table->integer('bible_studies_count')->nullable(false)->default(0);
+            $table->integer('new_bible_studies_count')->nullable(false)->default(0);
+            $table->integer('existing_bible_studies_count')->nullable(false)->default(0);
+
             $table->integer('received_jesus_count')->nullable(false)->default(0);
+
             $table->integer('water_baptized_count')->nullable(false)->default(0);
+            $table->integer('holy_spirit_baptized_count')->nullable(false)->default(0);
+
             $table->integer('children_dedication_count')->nullable(false)->default(0);
 
             $table->string('testimonies_miracles_details')->nullable(true);

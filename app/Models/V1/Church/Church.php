@@ -13,7 +13,7 @@ class Church extends Model
         'district_area_id',
         'church_location_id',
         'church_name',
-        'description',
+        'church_address',
         'status',
         'isdeleted'
     ];

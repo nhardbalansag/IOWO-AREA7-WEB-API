@@ -19,9 +19,15 @@ class Activity extends Model
         'total_offering',
         'gospel_seed',
         'personal_tithes',
-        'bible_studies_count',
+
+        'new_bible_studies_count',
+        'existing_bible_studies_count',
+
         'received_jesus_count',
+
         'water_baptized_count',
+        'holy_spirit_baptized_count',
+
         'children_dedication_count',
         'testimonies_miracles_details',
         'activity_date',
