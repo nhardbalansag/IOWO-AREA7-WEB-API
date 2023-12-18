@@ -6,12 +6,14 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
 use Carbon\Carbon;
 use Exception;
+use DateTime;
 
-use Barryvdh\DomPDF\Facade\Pdf;
 
 use App\Models\V1\Activity\Activity;
+use App\Models\V1\GeneratedDocument\GeneratedDocument;
 
 class ReportController extends Controller
 {
@@ -100,9 +102,69 @@ class ReportController extends Controller
     // Pastors per church
     public function GeneratePDFReport(Request $request){
         try{
+
+            $generated_file = "";
+
             // save file to server
+            $validator = Validator::make($request->all(), [
+                'file_report' => [
+                    'required',
+                    'file',
+                    'mimes:pdf'
+                ],
+            ]);
+
+            if ($validator->fails()) {
+                $errors = $validator->errors();
+
+                $this->response = [
+                    'data' => $generated_file,
+                    'status' => false,
+                    'message' => $errors,
+                    'error' => false
+                ];
+
+                return response()->json($this->response, 422); // 422 Unprocessable Entity - Validation Error
+            }
+
+            $pdf = $request->hasFile('file_report'); // jpeg|png
+
+            if($pdf){
+                $file_arr = array(
+                    ["file" => $request->file('file_report')],
+                );
+
+                foreach ($file_arr as $key => $value) {
+                    //origin name
+                    $origin_name = $value['file']->getClientOriginalName();
+                    //size
+                    $size = $value['file']->getSize();
+                    //extension
+                    $extension = $value['file']->guessClientExtension();
+                    //mimetype
+                    $mimetype = $value['file']->getClientMimeType();
+
+                    //url
+                    $date = new DateTime();
+                    $type = explode("/", $mimetype);
+                    $url = $value['file']->storeAs(
+                        'file',
+                        md5_file($value['file']->getRealPath()) . $date->getTimestamp() . "." . $value['file']->guessClientExtension(),
+                        'public'
+                    );
+
+                    $GeneratedDocument = new GeneratedDocument;
+                    $GeneratedDocument->user_id = Auth::user()->id;
+                    $GeneratedDocument->file_location = $url;
+                    $GeneratedDocument->file_name = $origin_name;
+                    $GeneratedDocument->save();
+
+                    $generated_file = GeneratedDocument::where('id', $GeneratedDocument->id)->first();
+                }
+            }
+
             $this->response = [
-                'data' => null,
+                'data' => $generated_file,
                 'status' => true,
                 'error' => null
             ];
