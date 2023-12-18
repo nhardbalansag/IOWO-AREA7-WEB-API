@@ -14,6 +14,8 @@ Route::group(['middleware' => 'auth:api'], function() {
         Route::prefix('church')->group(function () {
             Route::prefix('report')->group(function () {
                 Route::post('/create/activity', [ReportController::class, 'CreateActivityReport']);
+                Route::post('/generate/pdf', [ReportController::class, 'GeneratePDFReport']);
+                Route::get('/filter/date', [ReportController::class, 'FilterDateRangeReport']);
             });
 
             Route::prefix('dashboard')->group(function () {

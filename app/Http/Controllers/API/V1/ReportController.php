@@ -70,10 +70,37 @@ class ReportController extends Controller
     }
 
     // Pastors per church
+    public function FilterDateRangeReport(Request $request){
+        try{
+            // date range from and to
+            $data = DB::select(
+                '   SELECT *
+                    FROM activities
+                    WHERE user_id = ?
+                    AND activity_date between ? AND ?', [Auth::user()->id, $request->date_from, $request->date_to]);
+
+            $this->response = [
+                'data' => $data,
+                'status' => true,
+                'error' => null
+            ];
+
+            return response()->json($this->response, 200, [], JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT);
+        } catch (Exception $exception) {
+            $this->response = [
+                'data' => null,
+                'status' => false,
+                'error' => $exception->getMessage()
+            ];
+
+            return response()->json($this->response, 500); // 500 Internal Server Error
+        }
+    }
+
+    // Pastors per church
     public function GeneratePDFReport(Request $request){
         try{
-
-
+            // save file to server
             $this->response = [
                 'data' => null,
                 'status' => true,
