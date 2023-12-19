@@ -53,9 +53,23 @@ class UserController extends Controller
                 if($password && $enteredEmail === $DBemail){
                     $token = $user_info->createToken('authToken')->accessToken;
 
+                    // get churches
+                    $churches_information = DB::select(
+                        '   SELECT
+                                assigned_church_leaders.id as assigned_church_leaders_table_id,
+                                churches.*
+                            FROM assigned_church_leaders
+                            JOIN churches ON assigned_church_leaders.church_id = churches.id
+                            WHERE user_id = ?', [$user_info->id]);
+
+                    $res = [
+                        "user_information" => $user_info,
+                        "church_information" => $churches_information
+                    ];
+
                     $this->response = [
                         'token' => $token,
-                        'information' => $user_info,
+                        'information' => $res,
                         'status' => true,
                         'error' => null
                     ];
