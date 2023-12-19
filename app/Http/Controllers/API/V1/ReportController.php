@@ -32,6 +32,7 @@ class ReportController extends Controller
                 'youth_attendance_count' => $request->youth_attendance_count,
                 'children_attendance_count' => $request->children_attendance_count,
 
+                'tithes' => $request->tithes,
                 'total_tithes' => $request->total_tithes,
                 'total_offering' => $request->total_offering,
                 'gospel_seed' => $request->gospel_seed,
@@ -46,6 +47,7 @@ class ReportController extends Controller
                 'holy_spirit_baptized_count' => $request->holy_spirit_baptized_count,
 
                 'children_dedication_count' => $request->children_dedication_count,
+                'healed_count' => $request->healed_count,
 
                 'testimonies_miracles_details' => $request->testimonies_miracles_details,
                 'activity_date' => Carbon::parse($request->activity_date)->format('Y-m-d'),
