@@ -15,6 +15,7 @@ class Activity extends Model
         'adult_attendance_count',
         'youth_attendance_count',
         'children_attendance_count',
+        'tithes',
         'total_tithes',
         'total_offering',
         'gospel_seed',
@@ -29,6 +30,7 @@ class Activity extends Model
         'holy_spirit_baptized_count',
 
         'children_dedication_count',
+        'healed_count',
         'testimonies_miracles_details',
         'activity_date',
         'remarks'

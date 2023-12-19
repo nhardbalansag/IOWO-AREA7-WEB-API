@@ -32,6 +32,7 @@ return new class extends Migration
             $table->integer('youth_attendance_count')->nullable(false)->default(0);
             $table->integer('children_attendance_count')->nullable(false)->default(0);
 
+            $table->decimal('tithes')->nullable(false)->default(0);
             $table->decimal('total_tithes')->nullable(false)->default(0);
             $table->decimal('total_offering')->nullable(false)->default(0);
             $table->decimal('gospel_seed')->nullable(false)->default(0);
@@ -46,6 +47,7 @@ return new class extends Migration
             $table->integer('holy_spirit_baptized_count')->nullable(false)->default(0);
 
             $table->integer('children_dedication_count')->nullable(false)->default(0);
+            $table->integer('healed_count')->nullable(false)->default(0);
 
             $table->string('testimonies_miracles_details')->nullable(true);
             $table->date('activity_date')->nullable(false)->default(now());
