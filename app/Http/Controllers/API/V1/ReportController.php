@@ -274,6 +274,35 @@ class ReportController extends Controller
         }
     }
 
+    // Pastors per church
+    public function GetMyPDFReports(Request $request){
+        try{
+
+            $files = DB::select(
+                '   SELECT *
+                    FROM generated_documents
+                    WHERE user_id = ?
+                    ORDER BY created_at DESC', [Auth::user()->id]);
+
+            $this->response = [
+                'data' => $files,
+                'status' => true,
+                'error' => null
+            ];
+
+            return response()->json($this->response, 200, [], JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT);
+
+        } catch (Exception $exception) {
+            $this->response = [
+                'data' => null,
+                'status' => false,
+                'error' => $exception->getMessage()
+            ];
+
+            return response()->json($this->response, 500); // 500 Internal Server Error
+        }
+    }
+
     // Area overseer
     public function RecognizeGeneratedPDFReport(Request $request){}
 
