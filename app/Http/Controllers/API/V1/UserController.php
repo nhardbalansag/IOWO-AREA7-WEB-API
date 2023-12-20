@@ -62,9 +62,19 @@ class UserController extends Controller
                             JOIN churches ON assigned_church_leaders.church_id = churches.id
                             WHERE user_id = ?', [$user_info->id]);
 
+                    $areaAndDistrict = DB::select(
+                        '   SELECT districts.district_name, areas.area_name
+                            FROM assigned_church_leaders
+                            JOIN churches ON churches.id = assigned_church_leaders.church_id
+                            JOIN district_areas ON district_areas.id = churches.district_area_id
+                            JOIN districts ON districts.id = district_areas.district_id
+                            JOIN areas ON areas.id = district_areas.area_id
+                            WHERE user_id = ?', [$user_info->id]);
+
                     $res = [
                         "user_information" => $user_info,
-                        "church_information" => $churches_information
+                        "church_information" => $churches_information,
+                        "churchDistrictAndArea_information" => $areaAndDistrict
                     ];
 
                     $this->response = [
@@ -73,6 +83,7 @@ class UserController extends Controller
                         'status' => true,
                         'error' => null
                     ];
+
                 }else if(!$password){
                     $this->response = [
                         'token' => null,
