@@ -81,7 +81,8 @@ class ReportController extends Controller
                 '   SELECT *
                     FROM activities
                     WHERE user_id = ?
-                    AND activity_date between ? AND ?', [Auth::user()->id, $request->date_from, $request->date_to]);
+                    AND activity_date between ? AND ?
+                    ORDER BY activity_date ASC', [Auth::user()->id, $request->date_from, $request->date_to]);
 
             $this->response = [
                 'data' => $data,
