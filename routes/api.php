@@ -18,6 +18,8 @@ Route::group(['middleware' => 'auth:api'], function() {
                 Route::post('/filter/date', [ReportController::class, 'FilterDateRangeReport']);
             });
 
+            Route::get('/my/generated/reports', [ReportController::class, 'GetMyPDFReports']);
+
             Route::prefix('dashboard')->group(function () {
                 Route::get('/view', [ReportController::class, 'PastorsDashboard']);
             });
