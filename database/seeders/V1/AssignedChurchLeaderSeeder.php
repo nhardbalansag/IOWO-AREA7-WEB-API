@@ -18,6 +18,10 @@ class AssignedChurchLeaderSeeder extends Seeder
                 'user_id' => 1,
                 'church_id' => 1
             ],
+            [
+                'user_id' => 2,
+                'church_id' => 2
+            ],
         ];
 
         foreach ($data as $item) {

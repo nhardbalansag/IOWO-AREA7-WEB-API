@@ -28,6 +28,18 @@ class UserSeeder extends Seeder
                 'email' => "admin@email.com",
                 'email_verified_at' => now(),
                 'password' => Hash::make('admin')
+            ],
+            [
+                'user_category_id' => 1,
+                'firstname' => "mervin",
+                'lastname' => "pabiran",
+                'middlename' => "",
+                'birthday' => Carbon::parse('1997-04-01')->format('y-m-d'),
+                'address' => "none",
+                'contactnumber' => "none",
+                'email' => "mervinpabiran@gmail.com",
+                'email_verified_at' => now(),
+                'password' => Hash::make('mervinpabiran')
             ]
         ];
 
