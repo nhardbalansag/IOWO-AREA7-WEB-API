@@ -24,7 +24,10 @@ class ReportController extends Controller
     public function CreateActivityReport(Request $request){
         try{
 
-            $count = DB::select('SELECT COUNT(*) FROM activities WHERE activity_date = ?', [Carbon::parse($request->activity_date)->format('Y-m-d')]);
+            $count = DB::table('activities')
+            ->where('user_id', Auth::user()->id)
+            ->where('activity_date', Carbon::parse($request->activity_date)->format('Y-m-d'))
+            ->count();
 
             if ($count > 0) {
 
