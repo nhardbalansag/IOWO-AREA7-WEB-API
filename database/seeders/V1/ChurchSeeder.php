@@ -24,6 +24,11 @@ class ChurchSeeder extends Seeder
                 'church_name' => "International One Way Outreach Taguig",
                 'church_address' => "maharlika road upper bicutan, taguig city"
             ],
+            [
+                'district_area_id' => 7,
+                'church_name' => "International One Way Outreach Novaliches",
+                'church_address' => "56 sta. veronica st. gulod novaliches quezon city"
+            ],
         ];
 
         foreach ($data as $item) {
