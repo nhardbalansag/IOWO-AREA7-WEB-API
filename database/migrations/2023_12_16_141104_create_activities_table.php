@@ -50,7 +50,7 @@ return new class extends Migration
             $table->integer('healed_count')->nullable(false)->default(0);
 
             $table->string('testimonies_miracles_details')->nullable(true);
-            $table->date('activity_date')->nullable(false)->default(now())->uniqid;
+            $table->date('activity_date')->nullable(false)->default(now());
             $table->string('remarks')->nullable(true);
 
             $table->timestamps();
