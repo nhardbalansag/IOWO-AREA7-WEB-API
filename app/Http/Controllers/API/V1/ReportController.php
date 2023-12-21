@@ -24,44 +24,57 @@ class ReportController extends Controller
     public function CreateActivityReport(Request $request){
         try{
 
-            $result = Activity::create([
-                'user_id' => Auth::user()->id,
-                'activity_category_id' => $request->activity_category_id,
+            $count = DB::select('SELECT COUNT(*) FROM activities WHERE activity_date = ?', [Carbon::parse($request->activity_date)->format('Y-m-d')]);
 
-                'adult_attendance_count' => $request->adult_attendance_count,
-                'youth_attendance_count' => $request->youth_attendance_count,
-                'children_attendance_count' => $request->children_attendance_count,
+            if ($count > 0) {
 
-                'tithes' => $request->tithes,
-                'total_tithes' => $request->total_tithes,
-                'total_offering' => $request->total_offering,
-                'gospel_seed' => $request->gospel_seed,
-                'personal_tithes' => $request->personal_tithes,
+                $this->response = [
+                    'data' => null,
+                    'status' => false,
+                    'error' => "exist"
+                ];
 
-                'new_bible_studies_count' => $request->new_bible_studies_count,
-                'existing_bible_studies_count' => $request->existing_bible_studies_count,
+                return response()->json($this->response, 422); // 422 Unprocessable Entity - Validation Error
+            }else{
+                $result = Activity::create([
+                    'user_id' => Auth::user()->id,
+                    'activity_category_id' => $request->activity_category_id,
 
-                'received_jesus_count' => $request->received_jesus_count,
+                    'adult_attendance_count' => $request->adult_attendance_count,
+                    'youth_attendance_count' => $request->youth_attendance_count,
+                    'children_attendance_count' => $request->children_attendance_count,
 
-                'water_baptized_count' => $request->water_baptized_count,
-                'holy_spirit_baptized_count' => $request->holy_spirit_baptized_count,
+                    'tithes' => $request->tithes,
+                    'total_tithes' => $request->total_tithes,
+                    'total_offering' => $request->total_offering,
+                    'gospel_seed' => $request->gospel_seed,
+                    'personal_tithes' => $request->personal_tithes,
 
-                'children_dedication_count' => $request->children_dedication_count,
-                'healed_count' => $request->healed_count,
+                    'new_bible_studies_count' => $request->new_bible_studies_count,
+                    'existing_bible_studies_count' => $request->existing_bible_studies_count,
 
-                'testimonies_miracles_details' => $request->testimonies_miracles_details,
-                'activity_date' => Carbon::parse($request->activity_date)->format('Y-m-d'),
-                'remarks' => $request->remarks
-            ]);
+                    'received_jesus_count' => $request->received_jesus_count,
 
-            $this->response = [
-                'data' => $result,
-                'status' => true,
-                'error' => null
-            ];
+                    'water_baptized_count' => $request->water_baptized_count,
+                    'holy_spirit_baptized_count' => $request->holy_spirit_baptized_count,
 
-            return response()->json($this->response, 200, [], JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT);
+                    'children_dedication_count' => $request->children_dedication_count,
+                    'healed_count' => $request->healed_count,
 
+                    'testimonies_miracles_details' => $request->testimonies_miracles_details,
+                    'activity_date' => Carbon::parse($request->activity_date)->format('Y-m-d'),
+                    'remarks' => $request->remarks
+                ]);
+
+                $this->response = [
+                    'data' => $result,
+                    'status' => true,
+                    'error' => null
+                ];
+
+                return response()->json($this->response, 200, [], JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT);
+
+            }
         } catch (Exception $exception) {
             $this->response = [
                 'data' => null,
