@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\API\V1\UserController;
 use App\Http\Controllers\API\V1\ReportController;
+use App\Http\Controllers\API\V1\Logs\LogsController;
 
 Route::post('/login', [UserController::class, 'login']);
 
@@ -23,6 +24,10 @@ Route::group(['middleware' => 'auth:api'], function() {
             Route::prefix('dashboard')->group(function () {
                 Route::get('/view', [ReportController::class, 'PastorsDashboard']);
             });
+        });
+
+        Route::prefix('log')->group(function () {
+            Route::post('/create', [LogsController::class, 'AddToInfoLog']);
         });
     });
 });

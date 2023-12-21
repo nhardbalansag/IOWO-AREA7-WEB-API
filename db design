@@ -158,3 +158,57 @@ NOTIFICATIONS UPDATE:
 4. update: will notify the assigned church Pastor for example: Pastor Ruel Sambayon once his approved generated pdf file is already recognize by area and district overseer for example: Pastor Pijime and Rev. Pastor Cosme
 
 5. will notify all the users in app when announcement has been posted
+
+
+add users
+INSERT
+INTO users
+(
+    `user_category_id`,
+    `firstname`,
+    `lastname`,
+    `middlename`,
+    `birthday`,
+    `address`,
+    `contactnumber`,
+    `email`,
+    `password`
+)
+VALUES
+(
+    1,
+    "bonyl",
+    "aballe",
+    "",
+    "none",
+    "novaliches quezon city",
+    "09922320650",
+    "aballebonyl@gmail.com",
+    "aballebonyl"
+);
+
+INSERT
+INTO churches
+(
+    `district_area_id`,
+    `church_name`,
+    `church_address`
+)
+VALUES
+(
+    7,
+    "International One Way Outreach Novaliches",
+    "56 sta. veronica st. gulod novaliches quezon city"
+);
+
+INSERT
+INTO assigned_church_leaders
+(
+    `user_id`,
+    `church_id`
+)
+VALUES
+(
+    8,
+    3
+);
