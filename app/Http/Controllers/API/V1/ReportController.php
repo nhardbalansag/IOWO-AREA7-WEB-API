@@ -278,13 +278,13 @@ class ReportController extends Controller
     public function GetMyPDFReports(Request $request){
         try{
 
-            // $files = DB::select(
-            //     '   SELECT *
-            //         FROM generated_documents
-            //         WHERE user_id = ?
-            //         ORDER BY created_at DESC', [Auth::user()->id]);
+            $files = DB::select(
+                '   SELECT *
+                    FROM generated_documents
+                    WHERE user_id = ?
+                    ORDER BY created_at DESC', [Auth::user()->id]);
 
-            $files = DB::table('generated_documents')->where('user_id', Auth::user()->id)->paginate(5);
+            // $files = DB::table('generated_documents')->where('user_id', Auth::user()->id)->paginate(5);
 
             $this->response = [
                 'data' => $files,
