@@ -19,6 +19,11 @@ class ChurchSeeder extends Seeder
                 'church_name' => "International One Way Outreach Miramonte",
                 'church_address' => "miramonte park subdivision brgy. 180 caloocan city"
             ],
+            [
+                'district_area_id' => 7,
+                'church_name' => "International One Way Outreach Taguig",
+                'church_address' => "maharlika road upper bicutan, taguig city"
+            ],
         ];
 
         foreach ($data as $item) {
