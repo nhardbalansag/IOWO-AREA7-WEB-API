@@ -15,6 +15,7 @@ class GeneratedDocument extends Model
         'is_recognized',
         'file_location',
         'file_name',
+        'file_type_category',
         'code'
     ];
 }

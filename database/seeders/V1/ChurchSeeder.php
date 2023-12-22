@@ -16,17 +16,17 @@ class ChurchSeeder extends Seeder
         $data = [
             [
                 'district_area_id' => 7,
-                'church_name' => "International One Way Outreach Miramonte",
+                'church_name' => "Miramonte",
                 'church_address' => "miramonte park subdivision brgy. 180 caloocan city"
             ],
             [
                 'district_area_id' => 7,
-                'church_name' => "International One Way Outreach Taguig",
+                'church_name' => "Taguig",
                 'church_address' => "maharlika road upper bicutan, taguig city"
             ],
             [
                 'district_area_id' => 7,
-                'church_name' => "International One Way Outreach Novaliches",
+                'church_name' => "Novaliches",
                 'church_address' => "56 sta. veronica st. gulod novaliches quezon city"
             ],
         ];
