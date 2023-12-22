@@ -18,7 +18,11 @@ class UserCategorySeeder extends Seeder
         $users_data = [
             [
                 'user_category_title' => 'pastor',
-                'user_category_description' => "pastor"
+                'user_category_description' => "church pastor"
+            ],
+            [
+                'user_category_title' => 'area_overseer',
+                'user_category_description' => "area overseer pastor"
             ]
         ];
 
