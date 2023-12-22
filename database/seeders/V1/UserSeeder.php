@@ -19,27 +19,27 @@ class UserSeeder extends Seeder
         $users_data = [
             [
                 'user_category_id' => 1,
-                'firstname' => "admin first name",
-                'lastname' => "admin last name",
-                'middlename' => "admin middle",
+                'firstname' => "bernard",
+                'lastname' => "balansag",
+                'middlename' => "",
                 'birthday' => Carbon::parse('1997-04-01')->format('y-m-d'),
                 'address' => "miramonte caloocan city",
                 'contactnumber' => "+639214408767",
                 'email' => "admin@email.com",
                 'email_verified_at' => now(),
-                'password' => Hash::make('admin')
+                'password' => Hash::make('admin123')
             ],
             [
                 'user_category_id' => 1,
                 'firstname' => "mervin",
                 'lastname' => "pabiran",
                 'middlename' => "",
-                'birthday' => Carbon::parse('1997-04-01')->format('y-m-d'),
-                'address' => "none",
+                'birthday' => null,
+                'address' => "san jose del monte bulacan",
                 'contactnumber' => "none",
                 'email' => "mervinpabiran@gmail.com",
                 'email_verified_at' => now(),
-                'password' => Hash::make('mervinpabiran')
+                'password' => Hash::make('admin123')
             ],
             [
                 'user_category_id' => 1,
@@ -51,7 +51,19 @@ class UserSeeder extends Seeder
                 'contactnumber' => "09922320650",
                 'email' => "aballebonyl@gmail.com",
                 'email_verified_at' => now(),
-                'password' => Hash::make('motojea')
+                'password' => Hash::make('admin123')
+            ],
+            [
+                'user_category_id' => 2,
+                'firstname' => "pijeme",
+                'lastname' => "walawala",
+                'middlename' => "franco",
+                'birthday' => Carbon::parse('1988-08-04')->format('y-m-d'),
+                'address' => "zamboanga del sur",
+                'contactnumber' => "09171655575",
+                'email' => "pijeme.walawala@gmail.com",
+                'email_verified_at' => now(),
+                'password' => Hash::make('admin123')
             ]
         ];
 
