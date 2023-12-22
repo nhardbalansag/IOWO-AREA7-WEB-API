@@ -108,7 +108,7 @@ class ReportController extends Controller
                             SUM(activities.adult_attendance_count) AS adult,
                             SUM(activities.youth_attendance_count) AS youth,
                             SUM(activities.children_attendance_count) AS children,
-                            (SUM(activities.adult_attendance_count) + SUM(activities.youth_attendance_count)  + SUM(activities.children_attendance_count)) AS total_attendance,
+                            SUM(activities.adult_attendance_count) + SUM(activities.youth_attendance_count)  + SUM(activities.children_attendance_count) AS total_attendance,
                             SUM(activities.new_bible_studies_count) AS new_bible_study,
                             SUM(activities.existing_bible_studies_count) AS existing_bible_study,
                             SUM(activities.received_jesus_count) AS received_christ,
@@ -127,7 +127,24 @@ class ReportController extends Controller
                         JOIN churches ON churches.id = assigned_church_leaders.church_id
                         WHERE activity_date BETWEEN ? AND ?
                         AND assigned_church_leaders.church_id IN (SELECT assigned_church_leaders.church_id FROM assigned_church_leaders WHERE user_id = ?)
-                        GROUP BY users.id;
+                        GROUP BY
+                            users.id,
+                            churches,
+                            name_of_pastors,
+                            activities.adult_attendance_count,
+                            activities.youth_attendance_count,
+                            activities.children_attendance_count,
+                            activities.new_bible_studies_count,
+                            activities.existing_bible_studies_count,
+                            activities.received_jesus_count,
+                            activities.holy_spirit_baptized_count,
+                            activities.water_baptized_count,
+                            activities.healed_count,
+                            activities.children_dedication_count,
+                            activities.tithes,
+                            activities.total_offering,
+                            activities.gospel_seed,
+                            activities.personal_tithes
                     ', [$request->date_from, $request->date_to, Auth::user()->id]);
 
                     $table_data_total = DB::select(
