@@ -62,10 +62,7 @@ class UserController extends Controller
                             JOIN churches ON assigned_church_leaders.church_id = churches.id
                             WHERE user_id = ?', [$user_info->id]);
 
-                    $user_type = DB::select(
-                        '   SELECT *
-                            FROM user_categories
-                            WHERE id = ?', [$user_info->user_category_id]);
+                    $user_type = DB::table('user_categories')->where('id', $user_info->user_category_id)->first();
 
                     $areaAndDistrict = DB::select(
                         '   SELECT districts.district_name, areas.area_name
