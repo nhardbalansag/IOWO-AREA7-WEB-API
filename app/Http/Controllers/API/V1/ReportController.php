@@ -209,7 +209,6 @@ class ReportController extends Controller
     // Pastors per church
     public function GeneratePDFReport(Request $request){
         try{
-
             $generated_file = "";
 
             // save file to server
@@ -264,6 +263,7 @@ class ReportController extends Controller
                     $GeneratedDocument->user_id = Auth::user()->id;
                     $GeneratedDocument->file_location = $url;
                     $GeneratedDocument->file_name = $origin_name;
+                    $GeneratedDocument->file_type_category = $request->file_type_category;
                     $GeneratedDocument->save();
 
                     $generated_file = GeneratedDocument::where('id', $GeneratedDocument->id)->first();

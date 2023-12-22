@@ -15,7 +15,7 @@ class ActivityCategorySeeder extends Seeder
     {
         $data = [
             [
-                'activity_name' => 'Regular Sunday Service',
+                'activity_name' => 'regular',
                 'description' => "regular sunday service"
             ],
         ];
