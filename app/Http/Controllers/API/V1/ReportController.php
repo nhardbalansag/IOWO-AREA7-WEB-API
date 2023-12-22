@@ -102,7 +102,7 @@ class ReportController extends Controller
             if($user_category->user_category_title === "area_overseer"){
 
                 $table_data = DB::select(
-                    `   SELECT
+                    '   SELECT
                             churches.church_name AS churches,
                             CONCAT(users.firstname, " ", users.middlename, " ", users.lastname) AS name_of_pastors,
                             SUM(activities.adult_attendance_count) AS adult,
@@ -127,12 +127,11 @@ class ReportController extends Controller
                         JOIN churches ON churches.id = assigned_church_leaders.church_id
                         WHERE activity_date BETWEEN ? AND ?
                         AND assigned_church_leaders.church_id IN (SELECT assigned_church_leaders.church_id FROM assigned_church_leaders WHERE user_id = ?)
-                        GROUP BY
-                            users.id;
-                    `, [$request->date_from, $request->date_to, Auth::user()->id]);
+                        GROUP BY users.id;
+                    ', [$request->date_from, $request->date_to, Auth::user()->id]);
 
                     $table_data_total = DB::select(
-                        `   SELECT
+                        '   SELECT
                                 SUM(activities.adult_attendance_count) AS adult,
                                 SUM(activities.youth_attendance_count) AS youth,
                                 SUM(activities.children_attendance_count) AS children,
@@ -155,7 +154,7 @@ class ReportController extends Controller
                             JOIN churches ON churches.id = assigned_church_leaders.church_id
                             WHERE activity_date BETWEEN ? AND ?
                             AND assigned_church_leaders.church_id IN (SELECT assigned_church_leaders.church_id FROM assigned_church_leaders WHERE user_id = ?)
-                        `, [$request->date_from, $request->date_to, Auth::user()->id]);
+                        ', [$request->date_from, $request->date_to, Auth::user()->id]);
 
                 $query_reponse = array(
                     "table_data" => $table_data,
