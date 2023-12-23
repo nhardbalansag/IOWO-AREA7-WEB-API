@@ -29,6 +29,11 @@ class ChurchSeeder extends Seeder
                 'church_name' => "Novaliches",
                 'church_address' => "56 sta. veronica st. gulod novaliches quezon city"
             ],
+            [
+                'district_area_id' => 1,
+                'church_name' => "test church",
+                'church_address' => "test church address"
+            ]
         ];
 
         foreach ($data as $item) {

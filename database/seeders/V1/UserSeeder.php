@@ -64,6 +64,18 @@ class UserSeeder extends Seeder
                 'email' => "pijeme.walawala@gmail.com",
                 'email_verified_at' => now(),
                 'password' => Hash::make('admin123')
+            ],
+            [
+                'user_category_id' => 1,
+                'firstname' => "daisy",
+                'lastname' => "walawala",
+                'middlename' => "",
+                'birthday' => null,
+                'address' => "zamboanga del sur",
+                'contactnumber' => "09171655575",
+                'email' => "walawala.daisy1988@yahoo.com",
+                'email_verified_at' => now(),
+                'password' => Hash::make('admin123')
             ]
         ];
 
