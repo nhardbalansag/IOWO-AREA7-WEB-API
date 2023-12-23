@@ -36,6 +36,7 @@ class UserSeeder extends Seeder
                 'middlename' => "",
                 'birthday' => null,
                 'address' => "san jose del monte bulacan",
+                'contactnumber' => null,
                 'email' => "mervinpabiran@gmail.com",
                 'email_verified_at' => now(),
                 'password' => Hash::make('admin123')
@@ -71,6 +72,7 @@ class UserSeeder extends Seeder
                 'middlename' => "",
                 'birthday' => null,
                 'address' => "zamboanga del sur",
+                'contactnumber' => null,
                 'email' => "walawala.daisy1988@yahoo.com",
                 'email_verified_at' => now(),
                 'password' => Hash::make('admin123')
