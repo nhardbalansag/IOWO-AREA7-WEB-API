@@ -316,81 +316,232 @@ class ReportController extends Controller
     // Pastors per church
     public function PastorsDashboard(Request $request){
         try{
-            // current month total tithes
-            $total_tithes = DB::select(
-                '   SELECT SUM(total_tithes) as current_month_tithes_total
-                    FROM activities
-                    WHERE user_id = ?
-                    AND Month(activity_date) = MONTH(now())', [Auth::user()->id]);
+            $user_category = DB::table('user_categories')
+                            ->where('id', Auth::user()->user_category_id)
+                            ->first();
 
-            // current month total offering
-            $total_offering = DB::select(
-                '   SELECT SUM(total_offering) as current_month_offering_total
-                    FROM activities
-                    WHERE user_id = ?
-                    AND Month(activity_date) = MONTH(now())', [Auth::user()->id]);
+            if($user_category->user_category_title === "area_overseer"){
+                $total_tithes = DB::select(
+                    '   SELECT SUM(total_tithes) as current_month_tithes_total
+                        FROM activities
+                        JOIN users ON users.id = activities.user_id
+                        JOIN assigned_church_leaders ON assigned_church_leaders.user_id = users.id
+                        JOIN churches ON churches.id = assigned_church_leaders.church_id
+                        WHERE Month(activity_date) = MONTH(now())
+                        AND assigned_church_leaders.church_id
+                            IN (
+                                SELECT assigned_church_leaders.church_id
+                                FROM assigned_church_leaders
+                                WHERE user_id = ?
+                            )'
+                , [Auth::user()->id]);
 
-            // three previous to current month tithes graph
-            $total_graph_tithes = DB::select(
-                '   SELECT SUM(total_tithes) as data_set, Month(activity_date) as label
-                    FROM activities
-                    WHERE user_id = ?
-                    AND activity_date >= CURDATE() - INTERVAL 3 MONTH
-                    GROUP BY MONTH(activity_date)', [Auth::user()->id]);
+                $total_offering = DB::select(
+                    '   SELECT SUM(total_offering) as current_month_offering_total
+                        FROM activities
+                        JOIN users ON users.id = activities.user_id
+                        JOIN assigned_church_leaders ON assigned_church_leaders.user_id = users.id
+                        JOIN churches ON churches.id = assigned_church_leaders.church_id
+                        WHERE Month(activity_date) = MONTH(now())
+                        AND assigned_church_leaders.church_id
+                            IN (
+                                SELECT assigned_church_leaders.church_id
+                                FROM assigned_church_leaders
+                                WHERE user_id = ?
+                            )'
+                , [Auth::user()->id]);
 
-            // three previous to current month offering graph
-            $total_graph_offering = DB::select(
-                '   SELECT SUM(total_offering) as data_set, Month(activity_date) as label
-                    FROM activities
-                    WHERE user_id = ?
-                    AND activity_date >= CURDATE() - INTERVAL 3 MONTH
-                    GROUP BY MONTH(activity_date)', [Auth::user()->id]);
+                $total_graph_tithes = DB::select(
+                    '   SELECT SUM(total_tithes) as data_set, Month(activity_date) as label
+                        FROM activities
+                        JOIN users ON users.id = activities.user_id
+                        JOIN assigned_church_leaders ON assigned_church_leaders.user_id = users.id
+                        JOIN churches ON churches.id = assigned_church_leaders.church_id
+                        WHERE activity_date >= CURDATE() - INTERVAL 3 MONTH
+                        AND assigned_church_leaders.church_id
+                            IN (
+                                SELECT assigned_church_leaders.church_id
+                                FROM assigned_church_leaders
+                                WHERE user_id = ?
+                            )
+                        GROUP BY MONTH(activity_date)'
+                , [Auth::user()->id]);
 
-            // current month total adult attendee
-            $total_adult_count = DB::select(
-                '   SELECT SUM(adult_attendance_count) as current_month_adult_total
-                    FROM activities
-                    WHERE user_id = ?
-                    AND Month(activity_date) = MONTH(now());', [Auth::user()->id]);
+                $total_graph_offering = DB::select(
+                    '   SELECT SUM(total_offering) as data_set, Month(activity_date) as label
+                        FROM activities
+                        JOIN users ON users.id = activities.user_id
+                        JOIN assigned_church_leaders ON assigned_church_leaders.user_id = users.id
+                        JOIN churches ON churches.id = assigned_church_leaders.church_id
+                        WHERE activity_date >= CURDATE() - INTERVAL 3 MONTH
+                        AND assigned_church_leaders.church_id
+                            IN (
+                                SELECT assigned_church_leaders.church_id
+                                FROM assigned_church_leaders
+                                WHERE user_id = ?
+                            )
+                        GROUP BY MONTH(activity_date)'
+                , [Auth::user()->id]);
 
-            // current month total youth attendee
-            $total_youth_count = DB::select(
-                '   SELECT SUM(youth_attendance_count)  as current_month_youth_total
-                    FROM activities
-                    WHERE user_id = ?
-                    AND Month(activity_date) = MONTH(now());', [Auth::user()->id]);
-            // current month total children attendee
-            $total_children_count = DB::select(
-                '   SELECT SUM(children_attendance_count)  as current_month_children_total
-                    FROM activities
-                    WHERE user_id = ?
-                    AND Month(activity_date) = MONTH(now());', [Auth::user()->id]);
-            // three previous to current month total attendee graph
-            $total_graph_attendee = DB::select(
-                '   SELECT SUM(adult_attendance_count + youth_attendance_count + children_attendance_count) as data_set, Month(activity_date) as label
-                    FROM activities
-                    WHERE user_id = ?
-                    AND activity_date >= CURDATE() - INTERVAL 3 MONTH
-                    GROUP BY MONTH(activity_date)', [Auth::user()->id]);
+                $total_adult_count = DB::select(
+                    '   SELECT SUM(adult_attendance_count) as current_month_adult_total
+                        FROM activities
+                        JOIN users ON users.id = activities.user_id
+                        JOIN assigned_church_leaders ON assigned_church_leaders.user_id = users.id
+                        JOIN churches ON churches.id = assigned_church_leaders.church_id
+                        WHERE Month(activity_date) = MONTH(now())
+                        AND assigned_church_leaders.church_id
+                            IN (
+                                SELECT assigned_church_leaders.church_id
+                                FROM assigned_church_leaders
+                                WHERE user_id = ?
+                            )'
+                , [Auth::user()->id]);
 
-            $data = [
-                'tithes' => $total_tithes[0],
-                'offering' => $total_offering[0],
-                'adult' => $total_adult_count[0],
-                'youth' => $total_youth_count[0],
-                'children' => $total_children_count[0],
-                'tithes_graph' => $total_graph_tithes,
-                'offering_graph' => $total_graph_offering,
-                'attendee_graph' => $total_graph_attendee,
-            ];
+                $total_youth_count = DB::select(
+                    '   SELECT SUM(youth_attendance_count)  as current_month_youth_total
+                        FROM activities
+                        JOIN users ON users.id = activities.user_id
+                        JOIN assigned_church_leaders ON assigned_church_leaders.user_id = users.id
+                        JOIN churches ON churches.id = assigned_church_leaders.church_id
+                        WHERE Month(activity_date) = MONTH(now())
+                        AND assigned_church_leaders.church_id
+                            IN (
+                                SELECT assigned_church_leaders.church_id
+                                FROM assigned_church_leaders
+                                WHERE user_id = ?
+                            )'
+                , [Auth::user()->id]);
 
-            $this->response = [
-                'data' => $data,
-                'status' => true,
-                'error' => null
-            ];
+                $total_children_count = DB::select(
+                    '   SELECT SUM(children_attendance_count)  as current_month_children_total
+                        FROM activities
+                        JOIN users ON users.id = activities.user_id
+                        JOIN assigned_church_leaders ON assigned_church_leaders.user_id = users.id
+                        JOIN churches ON churches.id = assigned_church_leaders.church_id
+                        WHERE Month(activity_date) = MONTH(now())
+                        AND assigned_church_leaders.church_id
+                            IN (
+                                SELECT assigned_church_leaders.church_id
+                                FROM assigned_church_leaders
+                                WHERE user_id = ?
+                            )'
+                , [Auth::user()->id]);
 
-            return response()->json($this->response, 200, [], JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT);
+                $total_graph_attendee = DB::select(
+                    '   SELECT SUM(adult_attendance_count + youth_attendance_count + children_attendance_count) as data_set, Month(activity_date) as label
+                        FROM activities
+                        JOIN users ON users.id = activities.user_id
+                        JOIN assigned_church_leaders ON assigned_church_leaders.user_id = users.id
+                        JOIN churches ON churches.id = assigned_church_leaders.church_id
+                        WHERE activity_date >= CURDATE() - INTERVAL 3 MONTH
+                        AND assigned_church_leaders.church_id
+                            IN (
+                                SELECT assigned_church_leaders.church_id
+                                FROM assigned_church_leaders
+                                WHERE user_id = ?
+                            )
+                        GROUP BY MONTH(activity_date)'
+                , [Auth::user()->id]);
+
+                $data = [
+                    'tithes' => $total_tithes[0],
+                    'offering' => $total_offering[0],
+                    'adult' => $total_adult_count[0],
+                    'youth' => $total_youth_count[0],
+                    'children' => $total_children_count[0],
+                    'tithes_graph' => $total_graph_tithes,
+                    'offering_graph' => $total_graph_offering,
+                    'attendee_graph' => $total_graph_attendee,
+                ];
+
+                $this->response = [
+                    'data' => $data,
+                    'status' => true,
+                    'error' => null
+                ];
+
+                return response()->json($this->response, 200, [], JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT);
+
+            }else if($user_category->user_category_title === "pastor"){
+                // current month total tithes
+                $total_tithes = DB::select(
+                    '   SELECT SUM(total_tithes) as current_month_tithes_total
+                        FROM activities
+                        WHERE user_id = ?
+                        AND Month(activity_date) = MONTH(now())', [Auth::user()->id]);
+
+                // current month total offering
+                $total_offering = DB::select(
+                    '   SELECT SUM(total_offering) as current_month_offering_total
+                        FROM activities
+                        WHERE user_id = ?
+                        AND Month(activity_date) = MONTH(now())', [Auth::user()->id]);
+
+                // three previous to current month tithes graph
+                $total_graph_tithes = DB::select(
+                    '   SELECT SUM(total_tithes) as data_set, Month(activity_date) as label
+                        FROM activities
+                        WHERE user_id = ?
+                        AND activity_date >= CURDATE() - INTERVAL 3 MONTH
+                        GROUP BY MONTH(activity_date)', [Auth::user()->id]);
+
+                // three previous to current month offering graph
+                $total_graph_offering = DB::select(
+                    '   SELECT SUM(total_offering) as data_set, Month(activity_date) as label
+                        FROM activities
+                        WHERE user_id = ?
+                        AND activity_date >= CURDATE() - INTERVAL 3 MONTH
+                        GROUP BY MONTH(activity_date)', [Auth::user()->id]);
+
+                // current month total adult attendee
+                $total_adult_count = DB::select(
+                    '   SELECT SUM(adult_attendance_count) as current_month_adult_total
+                        FROM activities
+                        WHERE user_id = ?
+                        AND Month(activity_date) = MONTH(now());', [Auth::user()->id]);
+
+                // current month total youth attendee
+                $total_youth_count = DB::select(
+                    '   SELECT SUM(youth_attendance_count)  as current_month_youth_total
+                        FROM activities
+                        WHERE user_id = ?
+                        AND Month(activity_date) = MONTH(now());', [Auth::user()->id]);
+
+                // current month total children attendee
+                $total_children_count = DB::select(
+                    '   SELECT SUM(children_attendance_count)  as current_month_children_total
+                        FROM activities
+                        WHERE user_id = ?
+                        AND Month(activity_date) = MONTH(now());', [Auth::user()->id]);
+
+                // three previous to current month total attendee graph
+                $total_graph_attendee = DB::select(
+                    '   SELECT SUM(adult_attendance_count + youth_attendance_count + children_attendance_count) as data_set, Month(activity_date) as label
+                        FROM activities
+                        WHERE user_id = ?
+                        AND activity_date >= CURDATE() - INTERVAL 3 MONTH
+                        GROUP BY MONTH(activity_date)', [Auth::user()->id]);
+
+                $data = [
+                    'tithes' => $total_tithes[0],
+                    'offering' => $total_offering[0],
+                    'adult' => $total_adult_count[0],
+                    'youth' => $total_youth_count[0],
+                    'children' => $total_children_count[0],
+                    'tithes_graph' => $total_graph_tithes,
+                    'offering_graph' => $total_graph_offering,
+                    'attendee_graph' => $total_graph_attendee,
+                ];
+
+                $this->response = [
+                    'data' => $data,
+                    'status' => true,
+                    'error' => null
+                ];
+
+                return response()->json($this->response, 200, [], JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT);
+            }
 
         } catch (Exception $exception) {
             $this->response = [
