@@ -20,6 +20,31 @@ class ReportController extends Controller
 
     public $response = [];
 
+    // admin access level and delete access type
+    public function DeletePDFReport(Request $request){
+        try{
+
+            $result = DB::table('generated_documents')->where('id', $request->pdf_id)->update(['is_deleted' => true]);
+
+            $this->response = [
+                'data' => $result,
+                'status' => true,
+                'error' => null
+            ];
+
+            return response()->json($this->response, 200, [], JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT);
+
+        } catch (Exception $exception) {
+            $this->response = [
+                'data' => null,
+                'status' => false,
+                'error' => $exception->getMessage()
+            ];
+
+            return response()->json($this->response, 500); // 500 Internal Server Error
+        }
+    }
+
     // Pastors per church
     public function CreateActivityReport(Request $request){
         try{
@@ -386,6 +411,7 @@ class ReportController extends Controller
                 '   SELECT *
                     FROM generated_documents
                     WHERE user_id = ?
+                    AND is_deleted = false
                     ORDER BY created_at DESC', [Auth::user()->id]);
 
             // $files = DB::table('generated_documents')->where('user_id', Auth::user()->id)->paginate(5);
