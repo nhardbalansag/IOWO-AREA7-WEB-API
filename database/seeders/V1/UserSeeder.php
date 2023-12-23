@@ -72,7 +72,7 @@ class UserSeeder extends Seeder
                 'middlename' => "",
                 'birthday' => null,
                 'address' => "zamboanga del sur",
-                'contactnumber' => "09171655575",
+                'contactnumber' => null,
                 'email' => "walawala.daisy1988@yahoo.com",
                 'email_verified_at' => now(),
                 'password' => Hash::make('admin123')
