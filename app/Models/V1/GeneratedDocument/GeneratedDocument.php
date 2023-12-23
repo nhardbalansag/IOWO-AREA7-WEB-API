@@ -13,6 +13,7 @@ class GeneratedDocument extends Model
         'user_id',
         'date_generated',
         'is_recognized',
+        'is_deleted',
         'file_location',
         'file_name',
         'file_type_category',
