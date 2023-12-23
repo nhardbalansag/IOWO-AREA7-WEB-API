@@ -24,6 +24,7 @@ return new class extends Migration
 
             $table->date('date_generated')->nullable(false)->default(now());
             $table->boolean('is_recognized')->nullable(false)->default(false);
+            $table->boolean('is_deleted')->nullable(false)->default(false);
             $table->string('file_location')->nullable(false);
             $table->string('file_name')->nullable(false);
             $table->string('file_type_category')->nullable(false)->default('church');
