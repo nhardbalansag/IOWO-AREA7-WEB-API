@@ -24,7 +24,7 @@ class ReportController extends Controller
     public function DeletePDFReport(Request $request){
         try{
 
-            $result = DB::table('generated_documents')->where('id', $request->pdf_id)->update(['is_deleted' => true]);
+            $result = DB::table('generated_documents')->where('user_id', Auth::user()->id)->where('id', $request->pdf_id)->update(['is_deleted' => true]);
 
             $this->response = [
                 'data' => $result,
