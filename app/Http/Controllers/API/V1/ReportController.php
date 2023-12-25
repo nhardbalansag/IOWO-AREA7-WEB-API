@@ -11,6 +11,9 @@ use Carbon\Carbon;
 use Exception;
 use DateTime;
 
+use Illuminate\Support\Facades\Mail;
+use App\Mail\AreaOverseer;
+
 
 use App\Models\V1\Activity\Activity;
 use App\Models\V1\GeneratedDocument\GeneratedDocument;
@@ -300,6 +303,78 @@ class ReportController extends Controller
                 'status' => true,
                 'error' => null
             ];
+
+            return response()->json($this->response, 200, [], JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT);
+        } catch (Exception $exception) {
+            $this->response = [
+                'data' => null,
+                'status' => false,
+                'error' => $exception->getMessage()
+            ];
+
+            return response()->json($this->response, 500); // 500 Internal Server Error
+        }
+    }
+
+    // Pastors per church
+    public function FinalizePDFReport(Request $request){
+        try{
+
+            $fileLocation = "";
+
+            $validator = Validator::make($request->all(), [
+                'pdf_id' => ['required']
+            ]);
+
+            if ($validator->fails()) {
+                $errors = $validator->errors();
+
+                $this->response = [
+                    'data' => "",
+                    'status' => false,
+                    'message' => $errors,
+                    'error' => false
+                ];
+
+                return response()->json($this->response, 422); // 422 Unprocessable Entity - Validation Error
+            }
+
+            $result = DB::table('generated_documents')
+                    ->where('user_id', Auth::user()->id)
+                    ->where('id', $request->pdf_id)
+                    ->update(
+                        [
+                            'is_finalized' => true,
+                            'date_finalized' => now()
+                        ]
+                    );
+
+            if($result){
+
+                $overseer_info = DB::table('users')
+                ->select('users.*')
+                ->join('user_categories', 'user_categories.id', 'users.user_category_id')
+                ->where('user_categories.user_category_title', 'area_overseer')
+                ->first();
+
+                // $references = [
+                //     'nhardbalansag@gmail.com'
+                // ];
+
+                $references = [
+                    $overseer_info->email
+                ];
+
+                $generated_documents = DB::table('generated_documents')->where('id', $request->pdf_id)->get();
+                $fileLocation = env('APP_URL') . "/storage/" . $generated_documents->file_location;
+                Mail::to($references)->send(new AreaOverseer($fileLocation));
+
+                $this->response = [
+                    'data' => "success",
+                    'status' => true,
+                    'error' => null
+                ];
+            }
 
             return response()->json($this->response, 200, [], JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT);
         } catch (Exception $exception) {

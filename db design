@@ -141,9 +141,11 @@
 -- 	- user_id => USER
 --     - date_generated
 -- 	- is_recognized
+-- 	- is_finalized
 --     - file_location
 --     - file_name
 --     - code
+-- 	- date_finalized
 -- 	- date_created
 -- 	- date_updated
 

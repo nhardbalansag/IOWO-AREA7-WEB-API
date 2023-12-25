@@ -23,7 +23,9 @@ return new class extends Migration
             ->onUpdate('cascade');
 
             $table->date('date_generated')->nullable(false)->default(now());
+            $table->dateTime('date_finalized')->nullable(true)->default(null);
             $table->boolean('is_recognized')->nullable(false)->default(false);
+            $table->boolean('is_finalized')->nullable(false)->default(false);
             $table->boolean('is_deleted')->nullable(false)->default(false);
             $table->string('file_location')->nullable(false);
             $table->string('file_name')->nullable(false);
