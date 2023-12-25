@@ -12,7 +12,9 @@ class GeneratedDocument extends Model
     protected $fillable = [
         'user_id',
         'date_generated',
+        'date_finalized',
         'is_recognized',
+        'is_finalized',
         'is_deleted',
         'file_location',
         'file_name',
@@ -20,6 +22,7 @@ class GeneratedDocument extends Model
         'code'
     ];
 }
+
 
 
 

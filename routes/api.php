@@ -18,6 +18,7 @@ Route::group(['middleware' => 'auth:api'], function() {
                 Route::post('/generate/pdf', [ReportController::class, 'GeneratePDFReport']);
                 Route::post('/filter/date', [ReportController::class, 'FilterDateRangeReport']);
                 Route::post('/delete', [ReportController::class, 'DeletePDFReport']);
+                Route::post('/finalize', [ReportController::class, 'FinalizePDFReport']);
             });
 
             Route::get('/my/generated/reports', [ReportController::class, 'GetMyPDFReports']);
