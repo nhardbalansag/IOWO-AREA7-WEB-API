@@ -365,12 +365,12 @@ class ReportController extends Controller
                     $overseer_info->email
                 ];
 
-                $generated_documents = DB::table('generated_documents')->where('id', $request->pdf_id)->get();
+                $generated_documents = DB::table('generated_documents')->where('id', $request->pdf_id)->first();
                 $fileLocation = env('APP_URL') . "/storage/" . $generated_documents->file_location;
                 Mail::to($references)->send(new AreaOverseer($fileLocation));
 
                 $this->response = [
-                    'data' => "success",
+                    'data' => $fileLocation,
                     'status' => true,
                     'error' => null
                 ];
