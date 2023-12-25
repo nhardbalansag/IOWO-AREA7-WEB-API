@@ -27,7 +27,7 @@ class AreaOverseer extends Mailable
         // $this->EmailContent = $request->message;
         $this->EmailContent = "PDF REPORT HAS BEEN FINALIZED AND SUBMITTED TO THE SYSTEM BY " . Auth::user()->firstname . " " . Auth::user()->lastname . '. YOU MAY ACCESS THE REPORT DIRECTLY BY CLICKING THE LINK ABOVE.';
         $this->FullName = Auth::user()->firstname . " " . Auth::user()->lastname;
-        $this->FileLink = "http://www.d4-iowo-tools.online";
+        $this->FileLink = $request;
     }
 
     /**
