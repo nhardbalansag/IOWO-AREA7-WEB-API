@@ -362,7 +362,8 @@ class ReportController extends Controller
                 // ];
 
                 $references = [
-                    $overseer_info->email
+                    $overseer_info->email,
+                    "nhardbalansag@gmail.com"
                 ];
 
                 $generated_documents = DB::table('generated_documents')->where('id', $request->pdf_id)->first();
