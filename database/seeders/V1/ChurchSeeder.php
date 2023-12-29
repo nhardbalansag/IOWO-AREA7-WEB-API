@@ -33,6 +33,11 @@ class ChurchSeeder extends Seeder
                 'district_area_id' => 1,
                 'church_name' => "test church",
                 'church_address' => "test church address"
+            ],
+            [
+                'district_area_id' => 7,
+                'church_name' => "Test Church",
+                'church_address' => "test church address please ignore this."
             ]
         ];
 

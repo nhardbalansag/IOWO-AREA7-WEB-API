@@ -42,6 +42,14 @@ class AssignedChurchLeaderSeeder extends Seeder
                 'user_id' => 5, // Pstr. Pijime
                 'church_id' => 1 // miramonte church
             ],
+            [
+                'user_id' => 5, // Pstr. Pijime
+                'church_id' => 5 // Test church
+            ],
+            [
+                'user_id' => 6, // Bernard Test Account Pastor category
+                'church_id' => 5 // Test church
+            ],
         ];
 
         foreach ($data as $item) {
