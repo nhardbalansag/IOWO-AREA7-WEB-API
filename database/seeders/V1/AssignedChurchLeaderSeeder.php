@@ -39,11 +39,11 @@ class AssignedChurchLeaderSeeder extends Seeder
                 'church_id' => 3 // novaliches church
             ],
             [
-                'user_id' => 5, // Pstr. Pijime
+                'user_id' => 5, // Pstr. Daisy
                 'church_id' => 1 // miramonte church
             ],
             [
-                'user_id' => 5, // Pstr. Pijime
+                'user_id' => 4, // Pstr. Pijime
                 'church_id' => 5 // Test church
             ],
             [
