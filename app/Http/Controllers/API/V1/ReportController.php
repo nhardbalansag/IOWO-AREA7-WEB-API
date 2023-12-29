@@ -326,12 +326,38 @@ class ReportController extends Controller
 
             }else if($user_category->user_category_title === "pastor"){
                 // date range from and to
-                $query_reponse = DB::select(
-                            '   SELECT *
-                                FROM activities
-                                WHERE user_id = ?
-                                AND MONTH(activity_date) = MONTH(?) AND YEAR(activity_date) =  YEAR(?)
-                                ORDER BY activity_date ASC', [Auth::user()->id, $request->month, $request->year]);
+                $table_data = DB::select(
+                    '   SELECT *
+                        FROM activities
+                        WHERE user_id = ?
+                        AND MONTH(activity_date) = MONTH(?) AND YEAR(activity_date) =  YEAR(?)
+                        ORDER BY activity_date ASC',
+                        [Auth::user()->id, $request->month, $request->year]
+                );
+
+                $table_data_total = DB::select(
+                    'SELECT
+                        SUM(adult_attendance_count) AS adult,
+                        SUM(youth_attendance_count) AS youth,
+                        SUM(children_attendance_count) AS children,
+                        SUM(tithes) AS church_tithes,
+                        SUM(total_offering) AS offering,
+                        SUM(gospel_seed) AS mission,
+                        SUM(personal_tithes) AS personal_tithes,
+                        (SUM(new_bible_studies_count) + SUM(existing_bible_studies_count)) as total_bible_study,
+                        SUM(received_jesus_count) AS received_christ,
+                        SUM(water_baptized_count) AS water_baptized,
+                        SUM(children_dedication_count) AS child_dedication
+                    FROM activities
+                    WHERE user_id = ?
+                    AND MONTH(activity_date) = MONTH(?) AND YEAR(activity_date) =  YEAR(?)',
+                    [Auth::user()->id, $request->month, $request->year]
+                );
+
+                $query_reponse = array(
+                    "table_data" => $table_data,
+                    "table_data_total" => $table_data_total
+                );
             }
 
             $this->response = [
