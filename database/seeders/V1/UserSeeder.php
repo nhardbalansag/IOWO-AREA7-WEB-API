@@ -76,6 +76,18 @@ class UserSeeder extends Seeder
                 'email' => "walawala.daisy1988@yahoo.com",
                 'email_verified_at' => now(),
                 'password' => Hash::make('admin123')
+            ],
+            [
+                'user_category_id' => 1,
+                'firstname' => "bernard",
+                'lastname' => "balansag",
+                'middlename' => "",
+                'birthday' => null,
+                'address' => "miramonte caloocan city",
+                'contactnumber' => null,
+                'email' => "nhardbalansag@gmail.com",
+                'email_verified_at' => now(),
+                'password' => Hash::make('admin123')
             ]
         ];
 
