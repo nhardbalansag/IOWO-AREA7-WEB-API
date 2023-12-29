@@ -273,23 +273,24 @@ class ReportController extends Controller
                         WHERE MONTH(activity_date) = MONTH(?) AND YEAR(activity_date) =  YEAR(?)
                         AND assigned_church_leaders.church_id IN (SELECT assigned_church_leaders.church_id FROM assigned_church_leaders WHERE user_id = ?)
                         GROUP BY
-                            users.id,
-                            churches,
-                            name_of_pastors,
-                            activities.adult_attendance_count,
-                            activities.youth_attendance_count,
-                            activities.children_attendance_count,
-                            activities.new_bible_studies_count,
-                            activities.existing_bible_studies_count,
-                            activities.received_jesus_count,
-                            activities.holy_spirit_baptized_count,
-                            activities.water_baptized_count,
-                            activities.healed_count,
-                            activities.children_dedication_count,
-                            activities.tithes,
-                            activities.total_offering,
-                            activities.gospel_seed,
-                            activities.personal_tithes
+                            activities.user_id
+                            -- users.id,
+                            -- churches,
+                            -- name_of_pastors,
+                            -- activities.adult_attendance_count,
+                            -- activities.youth_attendance_count,
+                            -- activities.children_attendance_count,
+                            -- activities.new_bible_studies_count,
+                            -- activities.existing_bible_studies_count,
+                            -- activities.received_jesus_count,
+                            -- activities.holy_spirit_baptized_count,
+                            -- activities.water_baptized_count,
+                            -- activities.healed_count,
+                            -- activities.children_dedication_count,
+                            -- activities.tithes,
+                            -- activities.total_offering,
+                            -- activities.gospel_seed,
+                            -- activities.personal_tithes
                     ', [$request->month, $request->year, Auth::user()->id]);
 
                     $table_data_total = DB::select(
