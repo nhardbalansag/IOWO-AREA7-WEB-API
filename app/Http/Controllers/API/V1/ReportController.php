@@ -235,6 +235,123 @@ class ReportController extends Controller
     }
 
     // Pastors per church
+    public function FilterSpecificMonthReport(Request $request){
+        try{
+
+            $query_reponse = [];
+
+            $user_category = DB::table('user_categories')
+                            ->where('id', Auth::user()->user_category_id)
+                            ->first();
+
+            if($user_category->user_category_title === "area_overseer"){
+
+                $table_data = DB::select(
+                    '   SELECT
+                            churches.church_name AS churches,
+                            CONCAT(users.firstname, " ", users.middlename, " ", users.lastname) AS name_of_pastors,
+                            SUM(activities.adult_attendance_count) AS adult,
+                            SUM(activities.youth_attendance_count) AS youth,
+                            SUM(activities.children_attendance_count) AS children,
+                            SUM(activities.adult_attendance_count) + SUM(activities.youth_attendance_count)  + SUM(activities.children_attendance_count) AS total_attendance,
+                            SUM(activities.new_bible_studies_count) AS new_bible_study,
+                            SUM(activities.existing_bible_studies_count) AS existing_bible_study,
+                            SUM(activities.received_jesus_count) AS received_christ,
+                            SUM(activities.holy_spirit_baptized_count) AS holy_spirit_baptized,
+                            SUM(activities.water_baptized_count) AS water_baptized,
+                            SUM(activities.healed_count) AS healed,
+                            SUM(activities.children_dedication_count) AS child_dedication,
+                            SUM(activities.tithes) AS church_tithes,
+                            SUM(activities.total_offering) AS offering,
+                            SUM(activities.gospel_seed) AS mission,
+                            SUM(activities.personal_tithes) AS personal_tithes
+
+                        FROM activities
+                        JOIN users ON users.id = activities.user_id
+                        JOIN assigned_church_leaders ON assigned_church_leaders.user_id = users.id
+                        JOIN churches ON churches.id = assigned_church_leaders.church_id
+                        WHERE MONTH(activity_date) = MONTH(?) AND YEAR(activity_date) =  YEAR(?)
+                        AND assigned_church_leaders.church_id IN (SELECT assigned_church_leaders.church_id FROM assigned_church_leaders WHERE user_id = ?)
+                        GROUP BY
+                            users.id,
+                            churches,
+                            name_of_pastors,
+                            activities.adult_attendance_count,
+                            activities.youth_attendance_count,
+                            activities.children_attendance_count,
+                            activities.new_bible_studies_count,
+                            activities.existing_bible_studies_count,
+                            activities.received_jesus_count,
+                            activities.holy_spirit_baptized_count,
+                            activities.water_baptized_count,
+                            activities.healed_count,
+                            activities.children_dedication_count,
+                            activities.tithes,
+                            activities.total_offering,
+                            activities.gospel_seed,
+                            activities.personal_tithes
+                    ', [$request->month, $request->year, Auth::user()->id]);
+
+                    $table_data_total = DB::select(
+                        '   SELECT
+                                SUM(activities.adult_attendance_count) AS adult,
+                                SUM(activities.youth_attendance_count) AS youth,
+                                SUM(activities.children_attendance_count) AS children,
+                                (SUM(activities.adult_attendance_count) + SUM(activities.youth_attendance_count)  + SUM(activities.children_attendance_count)) AS total_attendance,
+                                SUM(activities.new_bible_studies_count) AS new_bible_study,
+                                SUM(activities.existing_bible_studies_count) AS existing_bible_study,
+                                SUM(activities.received_jesus_count) AS received_christ,
+                                SUM(activities.holy_spirit_baptized_count) AS holy_spirit_baptized,
+                                SUM(activities.water_baptized_count) AS water_baptized,
+                                SUM(activities.healed_count) AS healed,
+                                SUM(activities.children_dedication_count) AS child_dedication,
+                                SUM(activities.tithes) AS church_tithes,
+                                SUM(activities.total_offering) AS offering,
+                                SUM(activities.gospel_seed) AS mission,
+                                SUM(activities.personal_tithes) AS personal_tithes
+
+                            FROM activities
+                            JOIN users ON users.id = activities.user_id
+                            JOIN assigned_church_leaders ON assigned_church_leaders.user_id = users.id
+                            JOIN churches ON churches.id = assigned_church_leaders.church_id
+                            WHERE MONTH(activity_date) = MONTH(?) AND YEAR(activity_date) =  YEAR(?)
+                            AND assigned_church_leaders.church_id IN (SELECT assigned_church_leaders.church_id FROM assigned_church_leaders WHERE user_id = ?)
+                        ', [$request->month, $request->year, Auth::user()->id]);
+
+                $query_reponse = array(
+                    "table_data" => $table_data,
+                    "table_data_total" => $table_data_total
+                );
+
+            }else if($user_category->user_category_title === "pastor"){
+                // date range from and to
+                $query_reponse = DB::select(
+                            '   SELECT *
+                                FROM activities
+                                WHERE user_id = ?
+                                AND MONTH(activity_date) = MONTH(?) AND YEAR(activity_date) =  YEAR(?)
+                                ORDER BY activity_date ASC', [Auth::user()->id, $request->month, $request->year]);
+            }
+
+            $this->response = [
+                'data' => $query_reponse,
+                'status' => true,
+                'error' => null
+            ];
+
+            return response()->json($this->response, 200, [], JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT);
+        } catch (Exception $exception) {
+            $this->response = [
+                'data' => null,
+                'status' => false,
+                'error' => $exception->getMessage()
+            ];
+
+            return response()->json($this->response, 500); // 500 Internal Server Error
+        }
+    }
+
+    // Pastors per church
     public function GeneratePDFReport(Request $request){
         try{
             $generated_file = "";
