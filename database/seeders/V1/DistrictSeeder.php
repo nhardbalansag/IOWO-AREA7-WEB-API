@@ -17,6 +17,10 @@ class DistrictSeeder extends Seeder
             [
                 'district_name' => 'District 4',
                 'description' => "district 4"
+            ],
+            [
+                'district_name' => 'test district',
+                'description' => "test only"
             ]
         ];
 
