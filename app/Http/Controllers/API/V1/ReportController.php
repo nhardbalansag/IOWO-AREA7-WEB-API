@@ -221,7 +221,8 @@ class ReportController extends Controller
                     users.id AS user_id,
                     CONCAT(users.firstname, " ", users.middlename, " ", users.lastname) AS name_of_pastors,
                     activities.activity_date,
-                    churches.church_name
+                    churches.church_name,
+                    activities.id AS activity_id
                 FROM activities
                 JOIN users ON users.id = activities.user_id
                 JOIN assigned_church_leaders ON assigned_church_leaders.user_id = users.id
