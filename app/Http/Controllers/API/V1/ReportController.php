@@ -453,6 +453,7 @@ class ReportController extends Controller
 
                 $table_data = DB::select(
                     '   SELECT
+                            users.id AS id,
                             churches.church_name AS churches,
                             CONCAT(users.firstname, " ", users.middlename, " ", users.lastname) AS name_of_pastors,
                             SUM(activities.adult_attendance_count) AS adult,
