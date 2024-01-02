@@ -33,6 +33,9 @@ class Activity extends Model
         'healed_count',
         'testimonies_miracles_details',
         'activity_date',
-        'remarks'
+        'remarks',
+
+        'is_edit_requested',
+        'is_edit_approved'
     ];
 }

@@ -118,6 +118,211 @@ class ReportController extends Controller
     }
 
     // Pastors per church
+    public function RequestEditActivityReport(Request $request){
+        try{
+
+            $exists = DB::table('activities')
+                    ->where('user_id', Auth::user()->id)
+                    ->where('id', $request->activity_id)
+                    ->exists();
+
+            if ($exists) {
+
+                $result = DB::table('activities')
+                    ->where('user_id', Auth::user()->id)
+                    ->where('id', $request->activity_id)
+                    ->update(
+                        [
+                            'is_edit_requested' => true
+                        ]
+                    );
+
+                $this->response = [
+                    'data' => $result,
+                    'status' => true,
+                    'error' => null
+                ];
+
+                return response()->json($this->response, 422); // 422 Unprocessable Entity - Validation Error
+            }else{
+
+                $this->response = [
+                    'data' => null,
+                    'status' => false,
+                    'error' => "not exist"
+                ];
+
+                return response()->json($this->response, 200, [], JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT);
+            }
+        } catch (Exception $exception) {
+            $this->response = [
+                'data' => null,
+                'status' => false,
+                'error' => $exception->getMessage()
+            ];
+
+            return response()->json($this->response, 500); // 500 Internal Server Error
+        }
+    }
+
+    // Area overseer
+    public function ApprovedRequestEditActivityReport(Request $request){
+        try{
+
+            $exists = DB::table('activities')
+                    ->where('id', $request->activity_id)
+                    ->exists();
+
+            if ($exists) {
+
+                $result = DB::table('activities')
+                    ->where('id', $request->activity_id)
+                    ->update(
+                        [
+                            'is_edit_requested' => false,
+                            'is_edit_approved' => true
+                        ]
+                    );
+
+                $this->response = [
+                    'data' => $result,
+                    'status' => true,
+                    'error' => null
+                ];
+
+                return response()->json($this->response, 422); // 422 Unprocessable Entity - Validation Error
+            }else{
+
+                $this->response = [
+                    'data' => null,
+                    'status' => false,
+                    'error' => "not exist"
+                ];
+
+                return response()->json($this->response, 200, [], JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT);
+            }
+        } catch (Exception $exception) {
+            $this->response = [
+                'data' => null,
+                'status' => false,
+                'error' => $exception->getMessage()
+            ];
+
+            return response()->json($this->response, 500); // 500 Internal Server Error
+        }
+    }
+
+    // Area overseer
+    public function GetAllRequestEditActivityReport(Request $request){
+        try{
+
+            $table_data = DB::select(
+            '   SELECT *
+                FROM activities
+                JOIN users ON users.id = activities.user_id
+                JOIN assigned_church_leaders ON assigned_church_leaders.user_id = users.id
+                JOIN churches ON churches.id = assigned_church_leaders.church_id
+                join generated_documents on generated_documents.user_id = users.id
+                WHERE assigned_church_leaders.church_id IN (SELECT assigned_church_leaders.church_id FROM assigned_church_leaders WHERE user_id = ?)
+                AND is_edit_requested = ?',
+                [Auth::user()->id, true]
+            );
+
+            $this->response = [
+                'data' => $table_data,
+                'status' => true,
+                'error' => null
+            ];
+
+            return response()->json($this->response, 200, [], JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT);
+
+        } catch (Exception $exception) {
+            $this->response = [
+                'data' => null,
+                'status' => false,
+                'error' => $exception->getMessage()
+            ];
+
+            return response()->json($this->response, 500); // 500 Internal Server Error
+        }
+    }
+
+    // Pastors per church
+    public function SubmitEditActivityReport(Request $request){
+        try{
+
+            $exists = DB::table('activities')
+                    ->where('user_id', Auth::user()->id)
+                    ->where('id', $request->activity_id)
+                    ->exists();
+
+            if ($exists) {
+
+                $result = DB::table('activities')
+                    ->where('user_id', Auth::user()->id)
+                    ->where('id', $request->activity_id)
+                    ->update(
+                        [
+                            'adult_attendance_count' => $request->adult_attendance_count,
+                            'youth_attendance_count' => $request->youth_attendance_count,
+                            'children_attendance_count' => $request->children_attendance_count,
+
+                            'tithes' => $request->tithes,
+                            'total_tithes' => $request->total_tithes,
+                            'total_offering' => $request->total_offering,
+                            'gospel_seed' => $request->gospel_seed,
+                            'personal_tithes' => $request->personal_tithes,
+
+                            'new_bible_studies_count' => $request->new_bible_studies_count,
+                            'existing_bible_studies_count' => $request->existing_bible_studies_count,
+
+                            'received_jesus_count' => $request->received_jesus_count,
+
+                            'water_baptized_count' => $request->water_baptized_count,
+                            'holy_spirit_baptized_count' => $request->holy_spirit_baptized_count,
+
+                            'children_dedication_count' => $request->children_dedication_count,
+                            'healed_count' => $request->healed_count,
+
+                            'testimonies_miracles_details' => $request->testimonies_miracles_details,
+                            'activity_date' => Carbon::parse($request->activity_date)->format('Y-m-d'),
+
+                            'remarks' => "edited",
+
+                            'is_edit_requested' => false,
+                            'is_edit_approved' => false
+                        ]
+                    );
+
+                $this->response = [
+                    'data' => $result,
+                    'status' => true,
+                    'error' => null
+                ];
+
+                return response()->json($this->response, 422); // 422 Unprocessable Entity - Validation Error
+            }else{
+
+                $this->response = [
+                    'data' => null,
+                    'status' => false,
+                    'error' => "not exist"
+                ];
+
+                return response()->json($this->response, 200, [], JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT);
+            }
+        } catch (Exception $exception) {
+            $this->response = [
+                'data' => null,
+                'status' => false,
+                'error' => $exception->getMessage()
+            ];
+
+            return response()->json($this->response, 500); // 500 Internal Server Error
+        }
+    }
+
+    // Pastors per church
     public function FilterDateRangeReport(Request $request){
         try{
 

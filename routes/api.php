@@ -19,6 +19,12 @@ Route::group(['middleware' => 'auth:api'], function() {
                 Route::post('/filter/date', [ReportController::class, 'FilterDateRangeReport']);
                 Route::post('/filter/month', [ReportController::class, 'FilterSpecificMonthReport']);
                 Route::post('/delete', [ReportController::class, 'DeletePDFReport']);
+
+                Route::post('/request/edit', [ReportController::class, 'RequestEditActivityReport']);
+                Route::post('/request/approve', [ReportController::class, 'ApprovedRequestEditActivityReport']);
+                Route::get('/request/get', [ReportController::class, 'GetAllRequestEditActivityReport']);
+                Route::post('/request/edit/submit', [ReportController::class, 'SubmitEditActivityReport']);
+
                 Route::post('/finalize', [ReportController::class, 'FinalizePDFReport']);
             });
 
