@@ -53,6 +53,13 @@ return new class extends Migration
             $table->date('activity_date')->nullable(false)->default(now());
             $table->string('remarks')->nullable(true);
 
+
+            // edit access
+            // is_edit_requested
+            $table->boolean('is_edit_requested')->nullable(false)->default(false);
+            // is_edit_approved
+            $table->boolean('is_edit_approved')->nullable(false)->default(false);
+
             $table->timestamps();
         });
     }
