@@ -217,15 +217,20 @@ class ReportController extends Controller
         try{
 
             $table_data = DB::select(
-            '   SELECT *
+            '   SELECT
+                    users.id AS user_id,
+                    CONCAT(users.firstname, " ", users.middlename, " ", users.lastname) AS name_of_pastors,
+                    activities.activity_date,
+                    churches.church_name
                 FROM activities
                 JOIN users ON users.id = activities.user_id
                 JOIN assigned_church_leaders ON assigned_church_leaders.user_id = users.id
                 JOIN churches ON churches.id = assigned_church_leaders.church_id
-                join generated_documents on generated_documents.user_id = users.id
                 WHERE assigned_church_leaders.church_id IN (SELECT assigned_church_leaders.church_id FROM assigned_church_leaders WHERE user_id = ?)
-                AND is_edit_requested = ?',
-                [Auth::user()->id, true]
+                AND is_edit_requested = true
+                GROUP BY
+                    activities.id',
+                [Auth::user()->id]
             );
 
             $this->response = [
