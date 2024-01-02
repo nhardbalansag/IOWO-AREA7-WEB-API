@@ -31,13 +31,13 @@ class ChurchSeeder extends Seeder
             ],
             [
                 'district_area_id' => 1,
-                'church_name' => "test church",
-                'church_address' => "test church address"
+                'church_name' => "church 1",
+                'church_address' => "test church 1 address please ignore this."
             ],
             [
                 'district_area_id' => 7,
-                'church_name' => "Test Church",
-                'church_address' => "test church address please ignore this."
+                'church_name' => "church 2",
+                'church_address' => "test church 2 address please ignore this."
             ]
         ];
 

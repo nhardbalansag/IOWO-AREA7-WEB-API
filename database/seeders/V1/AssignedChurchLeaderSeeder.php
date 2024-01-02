@@ -14,9 +14,10 @@ class AssignedChurchLeaderSeeder extends Seeder
     public function run(): void
     {
         $data = [
+            // assigned test church 1 to this test account for pastor 1
             [
-                'user_id' => 1, // test acccount
-                'church_id' => 4 // test church
+                'user_id' => 1, // test pastor 1
+                'church_id' => 4 // test church 1
             ],
             [
                 'user_id' => 2, // Pstr. mervin pabiran
@@ -42,13 +43,19 @@ class AssignedChurchLeaderSeeder extends Seeder
                 'user_id' => 5, // Pstr. Daisy
                 'church_id' => 1 // miramonte church
             ],
+            // assigned test church 2 to this test account for pastor 2
             [
-                'user_id' => 4, // Pstr. Pijime
-                'church_id' => 5 // Test church
+                'user_id' => 6, // Test pastor 2
+                'church_id' => 5 // Test church 2
+            ],
+            // assigned 2 church to this test area overseer
+            [
+                'user_id' => 7, // test overseer 1
+                'church_id' => 4 // test church 1
             ],
             [
-                'user_id' => 6, // Bernard Test Account Pastor category
-                'church_id' => 5 // Test church
+                'user_id' => 7, // test overseer 1
+                'church_id' => 5 // test church 2
             ],
         ];
 

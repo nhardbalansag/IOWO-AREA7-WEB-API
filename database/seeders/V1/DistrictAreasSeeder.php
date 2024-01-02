@@ -42,6 +42,10 @@ class DistrictAreasSeeder extends Seeder
                 'district_id' => 1,
                 'area_id' => 7
             ],
+            [
+                'district_id' => 2,
+                'area_id' => 7
+            ],
         ];
 
         foreach ($data as $item) {

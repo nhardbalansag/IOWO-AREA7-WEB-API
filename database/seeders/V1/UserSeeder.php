@@ -19,13 +19,13 @@ class UserSeeder extends Seeder
         $users_data = [
             [
                 'user_category_id' => 1,
-                'firstname' => "bernard",
-                'lastname' => "balansag",
+                'firstname' => "pastor 1",
+                'lastname' => "pastor 1 lastname",
                 'middlename' => "",
                 'birthday' => Carbon::parse('1997-04-01')->format('y-m-d'),
                 'address' => "miramonte caloocan city",
                 'contactnumber' => "+639214408767",
-                'email' => "admin@email.com",
+                'email' => "pastor1@email.com",
                 'email_verified_at' => now(),
                 'password' => Hash::make('admin123')
             ],
@@ -79,13 +79,25 @@ class UserSeeder extends Seeder
             ],
             [
                 'user_category_id' => 1,
-                'firstname' => "bernard",
-                'lastname' => "balansag",
+                'firstname' => "pastor 2",
+                'lastname' => "pastor 2 lastname",
                 'middlename' => "",
                 'birthday' => null,
                 'address' => "miramonte caloocan city",
                 'contactnumber' => null,
-                'email' => "nhardbalansag@gmail.com",
+                'email' => "pastor2@email.com",
+                'email_verified_at' => now(),
+                'password' => Hash::make('admin123')
+            ],
+            [
+                'user_category_id' => 2,
+                'firstname' => "overseer",
+                'lastname' => "overseer",
+                'middlename' => "",
+                'birthday' => null,
+                'address' => "miramonte caloocan city",
+                'contactnumber' => null,
+                'email' => "bernardbalansag01@gmail.com",
                 'email_verified_at' => now(),
                 'password' => Hash::make('admin123')
             ]
