@@ -760,6 +760,7 @@ class ReportController extends Controller
                         JOIN assigned_church_leaders ON assigned_church_leaders.user_id = users.id
                         JOIN churches ON churches.id = assigned_church_leaders.church_id
                         WHERE Month(activity_date) = MONTH(now())
+                        AND year(activity_date) = year(now())
                         AND assigned_church_leaders.church_id
                             IN (
                                 SELECT assigned_church_leaders.church_id
@@ -775,6 +776,7 @@ class ReportController extends Controller
                         JOIN assigned_church_leaders ON assigned_church_leaders.user_id = users.id
                         JOIN churches ON churches.id = assigned_church_leaders.church_id
                         WHERE Month(activity_date) = MONTH(now())
+                        AND year(activity_date) = year(now())
                         AND assigned_church_leaders.church_id
                             IN (
                                 SELECT assigned_church_leaders.church_id
@@ -822,6 +824,7 @@ class ReportController extends Controller
                         JOIN assigned_church_leaders ON assigned_church_leaders.user_id = users.id
                         JOIN churches ON churches.id = assigned_church_leaders.church_id
                         WHERE Month(activity_date) = MONTH(now())
+                        AND year(activity_date) = year(now())
                         AND assigned_church_leaders.church_id
                             IN (
                                 SELECT assigned_church_leaders.church_id
@@ -837,6 +840,7 @@ class ReportController extends Controller
                         JOIN assigned_church_leaders ON assigned_church_leaders.user_id = users.id
                         JOIN churches ON churches.id = assigned_church_leaders.church_id
                         WHERE Month(activity_date) = MONTH(now())
+                        AND year(activity_date) = year(now())
                         AND assigned_church_leaders.church_id
                             IN (
                                 SELECT assigned_church_leaders.church_id
@@ -852,6 +856,7 @@ class ReportController extends Controller
                         JOIN assigned_church_leaders ON assigned_church_leaders.user_id = users.id
                         JOIN churches ON churches.id = assigned_church_leaders.church_id
                         WHERE Month(activity_date) = MONTH(now())
+                        AND year(activity_date) = year(now())
                         AND assigned_church_leaders.church_id
                             IN (
                                 SELECT assigned_church_leaders.church_id
@@ -901,14 +906,16 @@ class ReportController extends Controller
                     '   SELECT SUM(total_tithes) as current_month_tithes_total
                         FROM activities
                         WHERE user_id = ?
-                        AND Month(activity_date) = MONTH(now())', [Auth::user()->id]);
+                        AND Month(activity_date) = MONTH(now())
+                        AND year(activity_date) = year(now())', [Auth::user()->id]);
 
                 // current month total offering
                 $total_offering = DB::select(
                     '   SELECT SUM(total_offering) as current_month_offering_total
                         FROM activities
                         WHERE user_id = ?
-                        AND Month(activity_date) = MONTH(now())', [Auth::user()->id]);
+                        AND Month(activity_date) = MONTH(now())
+                        AND year(activity_date) = year(now())', [Auth::user()->id]);
 
                 // three previous to current month tithes graph
                 $total_graph_tithes = DB::select(
@@ -931,21 +938,24 @@ class ReportController extends Controller
                     '   SELECT SUM(adult_attendance_count) as current_month_adult_total
                         FROM activities
                         WHERE user_id = ?
-                        AND Month(activity_date) = MONTH(now());', [Auth::user()->id]);
+                        AND Month(activity_date) = MONTH(now())
+                        AND year(activity_date) = year(now())', [Auth::user()->id]);
 
                 // current month total youth attendee
                 $total_youth_count = DB::select(
                     '   SELECT SUM(youth_attendance_count)  as current_month_youth_total
                         FROM activities
                         WHERE user_id = ?
-                        AND Month(activity_date) = MONTH(now());', [Auth::user()->id]);
+                        AND Month(activity_date) = MONTH(now())
+                        AND year(activity_date) = year(now())', [Auth::user()->id]);
 
                 // current month total children attendee
                 $total_children_count = DB::select(
                     '   SELECT SUM(children_attendance_count)  as current_month_children_total
                         FROM activities
                         WHERE user_id = ?
-                        AND Month(activity_date) = MONTH(now());', [Auth::user()->id]);
+                        AND Month(activity_date) = MONTH(now())
+                        AND year(activity_date) = year(now())', [Auth::user()->id]);
 
                 // three previous to current month total attendee graph
                 $total_graph_attendee = DB::select(
