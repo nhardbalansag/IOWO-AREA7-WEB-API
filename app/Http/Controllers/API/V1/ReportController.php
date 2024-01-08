@@ -760,6 +760,7 @@ class ReportController extends Controller
                         JOIN assigned_church_leaders ON assigned_church_leaders.user_id = users.id
                         JOIN churches ON churches.id = assigned_church_leaders.church_id
                         WHERE Month(activity_date) = MONTH(now())
+                        AND year(activity_date) = year(now())
                         AND assigned_church_leaders.church_id
                             IN (
                                 SELECT assigned_church_leaders.church_id
@@ -775,6 +776,7 @@ class ReportController extends Controller
                         JOIN assigned_church_leaders ON assigned_church_leaders.user_id = users.id
                         JOIN churches ON churches.id = assigned_church_leaders.church_id
                         WHERE Month(activity_date) = MONTH(now())
+                        AND year(activity_date) = year(now())
                         AND assigned_church_leaders.church_id
                             IN (
                                 SELECT assigned_church_leaders.church_id
@@ -822,6 +824,7 @@ class ReportController extends Controller
                         JOIN assigned_church_leaders ON assigned_church_leaders.user_id = users.id
                         JOIN churches ON churches.id = assigned_church_leaders.church_id
                         WHERE Month(activity_date) = MONTH(now())
+                        AND year(activity_date) = year(now())
                         AND assigned_church_leaders.church_id
                             IN (
                                 SELECT assigned_church_leaders.church_id
@@ -837,6 +840,7 @@ class ReportController extends Controller
                         JOIN assigned_church_leaders ON assigned_church_leaders.user_id = users.id
                         JOIN churches ON churches.id = assigned_church_leaders.church_id
                         WHERE Month(activity_date) = MONTH(now())
+                        AND year(activity_date) = year(now())
                         AND assigned_church_leaders.church_id
                             IN (
                                 SELECT assigned_church_leaders.church_id
@@ -852,6 +856,7 @@ class ReportController extends Controller
                         JOIN assigned_church_leaders ON assigned_church_leaders.user_id = users.id
                         JOIN churches ON churches.id = assigned_church_leaders.church_id
                         WHERE Month(activity_date) = MONTH(now())
+                        AND year(activity_date) = year(now())
                         AND assigned_church_leaders.church_id
                             IN (
                                 SELECT assigned_church_leaders.church_id
